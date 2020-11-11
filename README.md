@@ -1,3 +1,12 @@
+# Getting Started With The Half Way There App
+Fork and clone the frontend and backend repositories then run npm install to download dependancies.
+
+You must also create a .env.local file and include in it a working API key from google that has access to the google geometry and places libraries. This should be included in the .env.local file as shown below:
+REACT_APP_GOOGLE_MAPS_API_KEY=<--yourworkingapikeyhere-->
+
+Then start the backend with npm start and then the frontend also with npm start
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
