@@ -16,29 +16,14 @@ const Login = () => {
                 <h2>Please login to access your dashboard!</h2>
                 
                 <div className='form-inputs'>
-                    <label htmlFor='firstname' className='form-label'>
+                    <label htmlFor='username' className='form-label'>
                         <input 
-                            id='firstname'
+                            id='username'
                             type='text'
-                            name='firstname'
+                            name='username'
                             className='form-input'
-                            placeholder='first name'
-                            value={values.firstname}
-                            onChange={handleChange}
-                            autoComplete='off'
-                        />
-                    </label>
-                </div>
-
-                <div className='form-inputs'>
-                    <label htmlFor='lastname' className='form-label'>
-                        <input 
-                            id='lastname'
-                            type='text'
-                            name='lastname'
-                            className='form-input'
-                            placeholder='last name'
-                            value={values.lastname}
+                            placeholder='username'
+                            value={values.username}
                             onChange={handleChange}
                             autoComplete='off'
                         />

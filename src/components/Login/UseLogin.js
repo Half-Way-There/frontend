@@ -5,8 +5,7 @@ const UseLogin = () => {
 
     // Setting Initial Values
     const [ values, setValues ] = useState({
-        firstname: '',
-        lastname: '',
+        username: '',
         email: '',
         password: '',
         confirmpassword: ''
