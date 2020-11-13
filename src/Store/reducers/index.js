@@ -1,4 +1,4 @@
-import { FETCH_START, FETCH_SUCCESS} from '../actions/index'
+import { FETCH_LOGIN_START, FETCH_LOGIN_SUCCESS} from '../actions/index'
 
 
 const initialState = {
@@ -6,17 +6,17 @@ const initialState = {
   data: []
 };
 
-export const loginReducer = (state = initialState, action ) => {
+export const fetchLoginReducer = (state = initialState, action ) => {
   switch (action.type) {
     // Fetching Data
-    case FETCH_START:
+    case FETCH_LOGIN_START:
       return {
         ...state,
         isLoading: true,
       }
 
     // Data Fetched
-    case FETCH_SUCCESS:
+    case FETCH_LOGIN_SUCCESS:
       return {
         ...state,
         isLoading: false,

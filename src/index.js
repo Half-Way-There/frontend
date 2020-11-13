@@ -9,14 +9,14 @@ import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 
 // Importing Redux Reducers
-import { fetchReducer } from './Store/reducers'
+import { fetchLoginReducer } from './Store/reducers'
 
 // Importing Components
 import App from './App'
 
 // Creating Redux Store
 // ***Logger must be the last middleware in chain or it will log thunk and promise not actual actions.***
-const store = createStore(fetchReducer, applyMiddleware(thunk, logger))
+const store = createStore(fetchLoginReducer, applyMiddleware(thunk, logger))
 
 ReactDOM.render(
   <React.StrictMode>

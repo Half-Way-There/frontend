@@ -11,3 +11,5 @@ export const authenticate = () => {
         baseURL: 'http request'
     })
 };
+
+export default authenticate
