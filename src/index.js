@@ -1,27 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
-// Importing Redux Store Dependencies
+import { BrowserRouter as Router } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
-
-// Importing Redux Reducers
-import { fetchLoginReducer } from './Store/reducers'
-
-// Importing Components
-import App from './App'
+import App from './components/App'
+import reducer from './Store/reducers'
 
 // Creating Redux Store
 // ***Logger must be the last middleware in chain or it will log thunk and promise not actual actions.***
-const store = createStore(fetchLoginReducer, applyMiddleware(thunk, logger))
+const store = createStore(reducer, applyMiddleware(thunk, logger))
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

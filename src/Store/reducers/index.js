@@ -1,30 +1,12 @@
-import { FETCH_LOGIN_START, FETCH_LOGIN_SUCCESS} from '../actions/index'
+import { combineReducers } from 'redux'
+import userReducer from './user.reducer'
+import contactsReducer from './contacts.reducer'
+import locationsReducer from './locations.reducer'
 
+const reducer = combineReducers({
+  user: userReducer,
+  contacts: contactsReducer,
+  locations: locationsReducer
+})
 
-const initialState = {
-  isLoading: false,
-  data: []
-};
-
-export const fetchLoginReducer = (state = initialState, action ) => {
-  switch (action.type) {
-    // Fetching Data
-    case FETCH_LOGIN_START:
-      return {
-        ...state,
-        isLoading: true,
-      }
-
-    // Data Fetched
-    case FETCH_LOGIN_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        data: action.payload
-      }
-
-      // Default to state
-      default:
-        return state
-  }
-};
+export default reducer
