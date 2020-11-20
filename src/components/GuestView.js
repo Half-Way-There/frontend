@@ -1,8 +1,9 @@
-import React, { useState, } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
-import Map from './components/Map'
-import MapRequest from './components/MapRequest'
-import Places from './components/Places'
+import Map from './Map'
+import MapRequest from './MapRequest'
+import Places from './Places'
+import { auth } from '../firebase'
 
 const StyledApp = styled.div`
   background-color: #121212;
@@ -10,6 +11,7 @@ const StyledApp = styled.div`
 `
 
 function App() {
+
   const [mapProps, setMapProps] = useState({
     options: { center: { lat: 39.80, lng: -98.55 }, zoom: 4.5 },
     onMount: null, 
