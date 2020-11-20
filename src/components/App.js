@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './Header'
+import HeaderContainer from '../containers/HeaderContainer'
 import LoginContainer from '../containers/LoginContainer'
 import Register from './Register'
 import ForgotPassword from './ForgotPassword'
@@ -10,7 +10,7 @@ import PrivateRoute from '../Auth/PrivateRoute'
 const App = () => {
     return (
         <div>
-            <Header />
+            <HeaderContainer />
                 <Switch>
                     <Route path="/forgot-password" component={ForgotPassword} />
                     <Route path="/register" component={Register} />

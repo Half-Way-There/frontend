@@ -2,7 +2,7 @@ import React from 'react'
 import { auth } from '../firebase'
 import { useHistory } from 'react-router-dom'
 
-const Header = () => {
+const Header = ({ clearUser }) => {
 
     const history = useHistory()
 
@@ -10,7 +10,8 @@ const Header = () => {
         localStorage.removeItem('token')
         auth.signOut()
         .then(() => {
-            history.push('/register')
+            clearUser()
+            history.push('/login')
         })
     }
 
