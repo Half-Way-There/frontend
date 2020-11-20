@@ -1,17 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import reducer from './reducers'
+import thunk from 'redux-thunk'
+import logger from 'redux-logger'
+import App from './components/App'
+import reducer from './Store/reducers'
 
-const store = createStore(reducer)
+// Creating Redux Store
+// ***Logger must be the last middleware in chain or it will log thunk and promise not actual actions.***
+const store = createStore(reducer, applyMiddleware(thunk, logger))
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
