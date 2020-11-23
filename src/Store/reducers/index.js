@@ -1,12 +1,25 @@
-import { combineReducers } from 'redux'
-import userReducer from './user.reducer'
-import contactsReducer from './contacts.reducer'
-import locationsReducer from './locations.reducer'
+import { SET_DATA, CLEAR_USER } from '../actions'
 
-const reducer = combineReducers({
-  user: userReducer,
-  contacts: contactsReducer,
-  locations: locationsReducer
-})
 
-export default reducer
+const initialState = {
+    data: null
+}
+
+const Reducer = (state = initialState, action) => {
+    switch(action.type) {
+        case SET_DATA: 
+            return {
+                ...state,
+                data: action.payload
+            }
+        case CLEAR_USER:
+            return {
+                ...state,
+                data: null
+            }
+        default:
+            return state
+    }
+}
+
+export default Reducer
