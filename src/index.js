@@ -7,11 +7,11 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import App from './components/App'
-import reducer from './Store/reducers'
+import Reducer from './Store/reducers'
 
 // Creating Redux Store
 // ***Logger must be the last middleware in chain or it will log thunk and promise not actual actions.***
-const store = createStore(reducer, applyMiddleware(thunk, logger))
+const store = createStore(Reducer, applyMiddleware(thunk, logger))
 
 ReactDOM.render(
   <React.StrictMode>

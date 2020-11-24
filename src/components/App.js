@@ -6,6 +6,7 @@ import ForgotPassword from './ForgotPassword'
 import { Route, Switch } from 'react-router-dom'
 import GuestView from './GuestView'
 import PrivateRoute from '../Auth/PrivateRoute'
+import Dashboard from './Dashboard'
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                     <Route path="/register" component={Register} />
                     <Route path="/login" component={LoginContainer} />
                     <Route path='/guest-view' component={GuestView} />
+                    <Route path='/dashboard' component={Dashboard} />
                     <PrivateRoute path='/protected' component={GuestView} />
                 </Switch>
         </div>
