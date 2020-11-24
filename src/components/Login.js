@@ -27,15 +27,24 @@ const Login = ({ setUser }) => {
         setLoading(true)
         auth.signInWithEmailAndPassword(form.email, form.password)
         .then(({user}) => {
-            console.log(user)
             return user.getIdToken().then((idToken) => {
                 localStorage.setItem('token', idToken)
-                setUser(user)
-                history.push('/protected')
-                // return axios.post('http://localhost:5001/login', {idToken}).then(() => {
-                //     // Set user
-                // })
+                axios.post('http://localhost:5001/auth/login', { idToken }, {
+                  headers: {
+                    authorization: idToken
+                  }
+                })
+                .then(res => {
+                  setUser(res.data)
+                  history.push("/dashboard")
+                })
+                .catch(err => {
+                  console.log("Error: ", err)
+                })
             })
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
 

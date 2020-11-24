@@ -28,9 +28,21 @@ const Register = () => {
         setLoading(true)
         if(form.password === form.confirmPassword) {
             auth.createUserWithEmailAndPassword(form.email, form.password)
-            .then((user) => {
-                console.log(user)
-                history.push('/login')
+            .then(({user}) => {
+                return user.getIdToken().then((idToken) => {
+                  localStorage.setItem('token', idToken)
+                  axios
+                    .post("http://localhost:5001/auth/register", { idToken }, {
+                      headers: {
+                        authorization: idToken
+                      }
+                     })
+                    .then(res => {
+                      auth.signOut()
+                      localStorage.removeItem("token")
+                      history.push('/login')
+                    })
+                })
             })
         } else {
             setError('Passwords must match!')
