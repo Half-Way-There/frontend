@@ -82,22 +82,9 @@ const Login = ({ setData }) => {
         .then(({user}) => {
             return user.getIdToken().then((idToken) => {
                 localStorage.setItem('token', idToken)
-<<<<<<< HEAD
-                axios.post('http://localhost:5001/auth/login', { idToken }, {
-                  headers: {
-                    authorization: idToken
-                  }
-                })
-                .then(res => {
-                  setUser(res.data)
-                  history.push("/dashboard")
-                })
-                .catch(err => {
-                  console.log("Error: ", err)
-                })
-=======
+
                 axios
-                    .post('http://localhost:5001/auth/login', {idToken}, {
+                    .post('http://localhost:5001/auth/login', {}, {
                         headers: {
                             authorization: idToken
                         }
@@ -109,10 +96,7 @@ const Login = ({ setData }) => {
                     .catch(err => {
                         setError(err.message)
                     })
-                // return axios.post('http://localhost:5001/login', {idToken}).then(() => {
-                //     // Set user
-                // })
->>>>>>> b85e1c3d9430054140dcb436670a4f05684b019f
+                    
             })
         })
         .catch(err => {
