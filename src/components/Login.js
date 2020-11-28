@@ -82,21 +82,19 @@ const Login = ({ setData }) => {
         .then(({user}) => {
             return user.getIdToken().then((idToken) => {
                 localStorage.setItem('token', idToken)
-
                 axios
-                    .post('http://localhost:5001/auth/login', {}, {
-                        headers: {
-                            authorization: idToken
-                        }
-                    })
-                    .then(res => {
-                        setData(res.data)
-                        history.push('/dashboard')
-                    })
-                    .catch(err => {
-                        setError(err.message)
-                    })
-                    
+                  .post('https://half-way-there-api.herokuapp.com/auth/login', { idToken }, {
+                      headers: {
+                          authorization: idToken
+                      }
+                  })
+                  .then(res => {
+                      setData(res.data)
+                      history.push('/dashboard')
+                  })
+                  .catch(err => {
+                      setError(err.message)
+                  })
             })
         })
         .catch(err => {

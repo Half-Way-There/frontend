@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Material-UI Imports:
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,12 +6,12 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
-import { TextField } from "@material-ui/core";
+import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import { Delete, Folder } from "@material-ui/icons";
 
 // Material-UI Copyright Information:
 function Copyright() {
@@ -51,9 +51,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = () => {
+const Dashboard = ({user, contacts, getData}) => {
   //Material-UI Declaring Classes
   const classes = useStyles();
+  const [dense, setDense] = useState(false);
+  const [settings, setSettings] = useState({
+    address: user ? user.address : "",
+    radius: user ? user.defaultRadius : "",
+    categories: ""
+  })
+
+  const onChange = (e) => {
+    const { name, value } = e.target
+    setSettings({
+      ...settings,
+      [name]: value
+    })
+  }
 
   return (
     <Container component="main" maxWidth="md">
@@ -83,15 +97,15 @@ const Dashboard = () => {
       {/* End Hero Content */}
 
       {/* Main Cards */}
-      <Container component="main" maxWidth="xs">
-        <Grid container spacing={5}>
-          <Grid item xs={12}>
+      <Container component="main">
+        <Grid container spacing={3} alignItems="center">
+          <Grid item xs={6}>
             <Card>
               <CardContent>
                 <Typography component="h1" variant="h5">
                   Account Settings
                 </Typography>
-                <form className={classes.form} autocomplete="off">
+                <form className={classes.form} autoComplete="off">
                   {" "}
                   {/* Add onSubmit */}
                   <TextField
@@ -101,7 +115,8 @@ const Dashboard = () => {
                     id="address"
                     label="Address"
                     name="address"
-                    // Add value & onChange
+                    value={settings.address}
+                    onChange={onChange}
                   />
                   <TextField
                     variant="outlined"
@@ -111,7 +126,8 @@ const Dashboard = () => {
                     label="Default Radius"
                     name="radius"
                     type="integer"
-                    // Add value & onChange
+                    value={settings.defaultRadius}
+                    onChange={onChange}
                   />
                   <TextField
                     variant="outlined"
@@ -120,7 +136,8 @@ const Dashboard = () => {
                     id="category"
                     label="Add Category"
                     name="category"
-                    // Add value & onChange
+                    value={settings.categories}
+                    onChange={onChange}
                   />
                   <Button
                     type="submit"
@@ -135,41 +152,65 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <Card>
               <CardContent>
-              <Typography component="h1" variant="h5">
-              New Contact
-            </Typography>
-            <form className={classes.form} autocomplete='off'>
-              <TextField
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              id='contactName'
-              label='Contact Name'
-              name='contactName'
-              />
-              <TextField
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              id='contactAddress'
-              label='Contact Address'
-              name='contactAddress'
-              />
-              <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Add Contact
-                  </Button>
-            </form>
+                <Typography component="h1" variant="h5">
+                  New Contact
+                </Typography>
+                <form className={classes.form} autoComplete='off'>
+                  <TextField
+                  variant='outlined'
+                  margin='normal'
+                  required
+                  fullWidth
+                  id='contactName'
+                  label='Contact Name'
+                  name='contactName'
+                  />
+                  <TextField
+                  variant='outlined'
+                  margin='normal'
+                  required
+                  fullWidth
+                  id='contactAddress'
+                  label='Contact Address'
+                  name='contactAddress'
+                  />
+                  <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                      >
+                        Add Contact
+                      </Button>
+                </form>
+                <div className={classes.demo}>
+                  <List dense={dense}>
+                    {contacts.map( contact => {
+                      return (
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <Folder />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={contact.contactName}
+                            secondary={contact.address}
+                          />
+                          <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete">
+                              <Delete />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      )
+                    })}
+                  </List>
+                </div>
               </CardContent>
             </Card>
           </Grid>
