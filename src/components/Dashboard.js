@@ -11,7 +11,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Delete, Folder } from "@material-ui/icons";
+import { Delete, Edit, Folder } from "@material-ui/icons";
 
 // Material-UI Copyright Information:
 function Copyright() {
@@ -56,9 +56,14 @@ const Dashboard = ({user, contacts, getData}) => {
   const classes = useStyles();
   const [dense, setDense] = useState(false);
   const [settings, setSettings] = useState({
-    address: user ? user.address : "",
-    radius: user ? user.defaultRadius : "",
+    address: user ? user.address || "" : "",
+    radius: user ? user.defaultRadius || "" : "",
     categories: ""
+  })
+
+  const [newContact, setNewContact] = useState({
+    name: "",
+    address: ""
   })
 
   const onChange = (e) => {
@@ -194,12 +199,11 @@ const Dashboard = ({user, contacts, getData}) => {
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar>
-                              <Folder />
+                              <Edit />
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText
                             primary={contact.contactName}
-                            secondary={contact.address}
                           />
                           <ListItemSecondaryAction>
                             <IconButton edge="end" aria-label="delete">

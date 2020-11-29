@@ -86,7 +86,7 @@ const Register = () => {
                 return user.getIdToken().then((idToken) => {
                   localStorage.setItem('token', idToken)
                   axios
-                    .post("http://localhost:5001/auth/register", { idToken }, {
+                    .post("https://half-way-there-api.herokuapp.com/auth/register", { idToken }, {
                       headers: {
                         authorization: idToken
                       }

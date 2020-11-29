@@ -85,7 +85,7 @@ const Login = ({ setData }) => {
                 axios
                   .post('https://half-way-there-api.herokuapp.com/auth/login', { idToken }, {
                       headers: {
-                          authorization: idToken
+                        authorization: idToken
                       }
                   })
                   .then(res => {
