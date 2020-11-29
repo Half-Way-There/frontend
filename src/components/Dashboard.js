@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Material-UI Imports:
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,11 +6,12 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
-import { TextField } from "@material-ui/core";
+import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { Delete, Edit, Folder } from "@material-ui/icons";
 
 // Material-UI Copyright Information:
 function Copyright() {
@@ -48,9 +49,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = () => {
+const Dashboard = ({user, contacts, getData}) => {
   //Material-UI Declaring Classes
   const classes = useStyles();
+  const [dense, setDense] = useState(false);
+  const [settings, setSettings] = useState({
+    address: user ? user.address || "" : "",
+    radius: user ? user.defaultRadius || "" : "",
+    categories: ""
+  })
+
+  const [newContact, setNewContact] = useState({
+    name: "",
+    address: ""
+  })
+
+  const onChange = (e) => {
+    const { name, value } = e.target
+    setSettings({
+      ...settings,
+      [name]: value
+    })
+  }
 
   return (
     <>

@@ -2,7 +2,10 @@ import { SET_DATA, CLEAR_USER } from '../actions'
 
 
 const initialState = {
-    data: null
+    data: {
+      user: null,
+      contacts: []
+    }
 }
 
 const Reducer = (state = initialState, action) => {
