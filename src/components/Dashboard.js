@@ -10,7 +10,6 @@ import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 
 // Material-UI Copyright Information:
@@ -32,8 +31,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(2),
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -56,7 +53,7 @@ const Dashboard = () => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="md">
+    <>
       <CssBaseline />
 
       {/* Hero Content */}
@@ -83,100 +80,119 @@ const Dashboard = () => {
       {/* End Hero Content */}
 
       {/* Main Cards */}
-      <Container component="main" maxWidth="xs">
-        <Grid container spacing={5}>
+      <Container maxWidth='xs' component='main'>
+      <Grid 
+        container 
+        direction='row' 
+        justify='space-evenly' 
+        alignItems='center' 
+        maxWidth="xs" 
+        spacing={6}
+      >
           <Grid item xs={12}>
-            <Card>
-              <CardContent>
-                <Typography component="h1" variant="h5">
-                  Account Settings
-                </Typography>
-                <form className={classes.form} autocomplete="off">
-                  {" "}
-                  {/* Add onSubmit */}
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    id="address"
-                    label="Address"
-                    name="address"
-                    // Add value & onChange
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    id="radius"
-                    label="Default Radius"
-                    name="radius"
-                    type="integer"
-                    // Add value & onChange
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    id="category"
-                    label="Add Category"
-                    name="category"
-                    // Add value & onChange
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Update
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
+          <Card>
+            <CardContent>
               <Typography component="h1" variant="h5">
-              New Contact
-            </Typography>
-            <form className={classes.form} autocomplete='off'>
-              <TextField
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              id='contactName'
-              label='Contact Name'
-              name='contactName'
-              />
-              <TextField
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              id='contactAddress'
-              label='Contact Address'
-              name='contactAddress'
-              />
-              <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Add Contact
-                  </Button>
-            </form>
-              </CardContent>
-            </Card>
-          </Grid>
+                Account Settings
+              </Typography>
+              <form 
+              className={classes.form}
+              autocomplete="off"
+              >
+                {" "}
+                {/* Add onSubmit */}
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="address"
+                  label="Address"
+                  name="address"
+                  // Add value & onChange
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="radius"
+                  label="Default Radius"
+                  name="radius"
+                  type="integer"
+                  // Add value & onChange
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="category"
+                  label="Add Category"
+                  name="category"
+                  // Add value & onChange
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Update
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </Grid>
-        {/* End Main Cards */}
-      </Container>
+        </Grid>
+        <Grid 
+        container 
+        direction='row' 
+        justify='space-evenly' 
+        alignItems='center' 
+        maxWidth="xs" 
+        spacing={6}
+      >
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography component="h1" variant="h5">
+                New Contact
+              </Typography>
+              <form className={classes.form} autocomplete="off">
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="contactName"
+                  label="Contact Name"
+                  name="contactName"
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="contactAddress"
+                  label="Contact Address"
+                  name="contactAddress"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Add Contact
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Container>
+      {/* End Main Cards */}
+    </>
   );
 };
 
