@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
 }));
-const Dashboard = ({user, contacts, getData}) => {
+const Dashboard = ({user, contacts, setData}) => {
   //Material-UI Declaring Classes
   const classes = useStyles();
   const [dense, setDense] = useState(false);
@@ -83,7 +83,6 @@ const Dashboard = ({user, contacts, getData}) => {
     })
   }
   const newContactOnChange = (e) => {
-    console.log(user.uid)
     const { name, value } = e.target
     setNewContact({
       ...newContact,
@@ -91,13 +90,11 @@ const Dashboard = ({user, contacts, getData}) => {
     })
   }
   const addContact = e => {
-    console.log(user.uid)
     e.preventDefault()
-    axiosWithAuth().post('contact/add',{
-      
+    axiosWithAuth().post('contact/add', {
       contact: {
-      name: newContact.name,
-      address: newContact.address,
+      name: newContact.contactName,
+      address: newContact.contactAddress,
       userId: user.uid
     }})
     .then(res => {
@@ -232,7 +229,7 @@ const Dashboard = ({user, contacts, getData}) => {
                   <List dense={dense}>
                     {contacts.map( contact => {
                       return (
-                        <ListItem>
+                        <ListItem key={contact.addressId}>
                           <ListItemAvatar>
                             <Avatar>
                               <Edit />
