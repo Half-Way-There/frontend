@@ -83,7 +83,7 @@ const Login = ({ setData }) => {
             return user.getIdToken().then((idToken) => {
                 localStorage.setItem('token', idToken)
                 axios
-                  .post('https://half-way-there-api.herokuapp.com/auth/login', { idToken }, {
+                  .post('http://localhost:5001/auth/login', { idToken }, {
                       headers: {
                         authorization: idToken
                       }
