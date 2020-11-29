@@ -11,7 +11,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Delete, Edit, Folder } from "@material-ui/icons";
+import { Delete, Edit } from "@material-ui/icons";
 
 // Material-UI Copyright Information:
 function Copyright() {
@@ -69,6 +69,14 @@ const Dashboard = ({user, contacts, getData}) => {
   const onChange = (e) => {
     const { name, value } = e.target
     setSettings({
+      ...settings,
+      [name]: value
+    })
+  }
+
+  const newContactOnChange = (e) => {
+    const { name, value } = e.target
+    setNewContact({
       ...settings,
       [name]: value
     })
@@ -172,6 +180,8 @@ const Dashboard = ({user, contacts, getData}) => {
                   id='contactName'
                   label='Contact Name'
                   name='contactName'
+                  value={newContact.name}
+                  onChange={newContactOnChange}
                   />
                   <TextField
                   variant='outlined'
@@ -181,6 +191,8 @@ const Dashboard = ({user, contacts, getData}) => {
                   id='contactAddress'
                   label='Contact Address'
                   name='contactAddress'
+                  value={newContact.address}
+                  onChange={newContactOnChange}
                   />
                   <Button
                         type="submit"
@@ -188,9 +200,10 @@ const Dashboard = ({user, contacts, getData}) => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        
                       >
-                        Add Contact
-                      </Button>
+                  Add Contact
+                </Button>
                 </form>
                 <div className={classes.demo}>
                   <List dense={dense}>
