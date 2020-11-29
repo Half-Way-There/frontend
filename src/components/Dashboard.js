@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 // Material-UI Imports:
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -12,7 +11,8 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { Delete, Edit } from "@material-ui/icons";
-
+import { axiosWithAuth } from '../Auth/axiosWithAuth'
+import { setData } from "../Store/actions";
 // Material-UI Copyright Information:
 function Copyright() {
   return (
@@ -26,7 +26,6 @@ function Copyright() {
     </Typography>
   );
 }
-
 // Material-UI Setting Styles:
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
 }));
-
 const Dashboard = ({user, contacts, getData}) => {
   //Material-UI Declaring Classes
   const classes = useStyles();
@@ -60,11 +58,22 @@ const Dashboard = ({user, contacts, getData}) => {
     radius: user ? user.defaultRadius || "" : "",
     categories: ""
   })
-
   const [newContact, setNewContact] = useState({
-    name: "",
-    address: ""
+    contactName: "",
+    contactAddress: ""
   })
+
+  useEffect(() => {
+    axiosWithAuth().post('auth/login', {})
+      .then(res => {
+          setData(res.data)
+          console.log(res.data)
+      })
+      .catch(err => {
+          console.log(err.message)
+      })
+    
+  }, [])
 
   const onChange = (e) => {
     const { name, value } = e.target
@@ -73,19 +82,34 @@ const Dashboard = ({user, contacts, getData}) => {
       [name]: value
     })
   }
-
   const newContactOnChange = (e) => {
+    console.log(user.uid)
     const { name, value } = e.target
     setNewContact({
-      ...settings,
+      ...newContact,
       [name]: value
     })
   }
-
+  const addContact = e => {
+    console.log(user.uid)
+    e.preventDefault()
+    axiosWithAuth().post('contact/add',{
+      
+      contact: {
+      name: newContact.name,
+      address: newContact.address,
+      userId: user.uid
+    }})
+    .then(res => {
+      setData(res.data)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />
-
       {/* Hero Content */}
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <Typography
@@ -108,7 +132,6 @@ const Dashboard = ({user, contacts, getData}) => {
         </Typography>
       </Container>
       {/* End Hero Content */}
-
       {/* Main Cards */}
       <Container component="main">
         <Grid container spacing={3} alignItems="center">
@@ -180,7 +203,7 @@ const Dashboard = ({user, contacts, getData}) => {
                   id='contactName'
                   label='Contact Name'
                   name='contactName'
-                  value={newContact.name}
+                  value={newContact.contactName}
                   onChange={newContactOnChange}
                   />
                   <TextField
@@ -191,7 +214,7 @@ const Dashboard = ({user, contacts, getData}) => {
                   id='contactAddress'
                   label='Contact Address'
                   name='contactAddress'
-                  value={newContact.address}
+                  value={newContact.contactAddress}
                   onChange={newContactOnChange}
                   />
                   <Button
@@ -200,7 +223,7 @@ const Dashboard = ({user, contacts, getData}) => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        
+                        onClick={addContact}
                       >
                   Add Contact
                 </Button>
@@ -237,5 +260,4 @@ const Dashboard = ({user, contacts, getData}) => {
     </Container>
   );
 };
-
 export default Dashboard;
