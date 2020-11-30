@@ -231,7 +231,7 @@ const Dashboard = ({user, contacts, setData}) => {
                   Search Categories
                 </Typography>
                 {user && user.categories.length > 0  ? <Typography component="p">
-                  Current Categories: {user.categories.map(each => <span key={each.id}><span className="categories">{each.category}</span><span onClick={() => removeCategory(each.id)}>X</span></span>)}
+                  Current Categories: {user.categories.map(each => <span style={{ border: "1px solid black", borderRadius: "5px", padding: "3px 5px", boxShadow: "1px 1px 3px black" }} key={each.id}><span>{each.category}</span><Delete style={{ verticalAlign: "middle", cursor: "pointer"}} onClick={() => removeCategory(each.id)} /></span>)}
                 </Typography> : null}
                 <form className={classes.form} autoComplete="off" onSubmit={addCategory}>
                   <TextField

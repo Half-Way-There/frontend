@@ -18,7 +18,10 @@ const Reducer = (state = initialState, action) => {
         case CLEAR_USER:
             return {
                 ...state,
-                data: null
+                data: {
+                  user: null,
+                  contacts: []
+                }
             }
         default:
             return state

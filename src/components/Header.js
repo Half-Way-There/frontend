@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const Header = ({ clearUser }) => {
+const Header = ({ user, clearUser }) => {
 
     const classes = useStyles()
 
@@ -39,15 +39,17 @@ const Header = ({ clearUser }) => {
                 <Typography variant='h6' className={classes.title}>
                     Half Way There
                 </Typography>
+                {user === null ? (
                 <Button href='/register' color='inherit'>
                     Register
-                </Button>
+                </Button> ) : null}
+                {user === null ? (
                 <Button href='/login' color='inherit'>
                     Login
-                </Button>
-                <Button onClick={onLogOut} color='inherit'>
+                </Button> ) : null}
+                {user !== null ? <Button onClick={onLogOut} color='inherit'>
                     Log out
-                </Button>
+                </Button> : null}
             </Toolbar>
         </AppBar>
 
