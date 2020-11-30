@@ -1,31 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
+import { axiosWithAuth } from "../Auth/axiosWithAuth"
+
 // Material-UI Imports:
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Link from "@material-ui/core/Link";
-import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import { Delete, Edit } from "@material-ui/icons";
-import { axiosWithAuth } from '../Auth/axiosWithAuth'
-import { setData } from "../Store/actions";
-// Material-UI Copyright Information:
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="/login">
-        Half-Way-There
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { makeStyles } from "@material-ui/core/styles"
+import Container from "@material-ui/core/Container"
+import Typography from "@material-ui/core/Typography"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField } from "@material-ui/core"
+import Button from "@material-ui/core/Button"
+import Grid from "@material-ui/core/Grid"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import { Delete, Edit } from "@material-ui/icons"
+
 // Material-UI Setting Styles:
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,30 +36,33 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
 }));
+
 const Dashboard = ({user, contacts, setData}) => {
   //Material-UI Declaring Classes
-  const classes = useStyles();
-  const [dense, setDense] = useState(false);
+  const classes = useStyles()
+  const [dense, setDense] = useState(false)
   const [settings, setSettings] = useState({
     address: user ? user.address || "" : "",
-    radius: user ? user.defaultRadius || "" : "",
-    categories: ""
+    defaultRadius: user ? user.defaultRadius || "" : ""
   })
+  const [category, setCategory] = useState("")
   const [newContact, setNewContact] = useState({
     contactName: "",
     contactAddress: ""
   })
 
   useEffect(() => {
-    axiosWithAuth().post('auth/login', {})
+    axiosWithAuth().post("auth/login", {})
       .then(res => {
           setData(res.data)
-          console.log(res.data)
+          setSettings({
+            address: res.data.user.address,
+            defaultRadius: parseInt(res.data.user.defaultRadius, 10)
+          })
       })
       .catch(err => {
           console.log(err.message)
       })
-    
   }, [])
 
   const onChange = (e) => {
@@ -82,6 +72,7 @@ const Dashboard = ({user, contacts, setData}) => {
       [name]: value
     })
   }
+
   const newContactOnChange = (e) => {
     const { name, value } = e.target
     setNewContact({
@@ -89,13 +80,44 @@ const Dashboard = ({user, contacts, setData}) => {
       [name]: value
     })
   }
-  const addContact = e => {
+
+  const updateSettings = e => {
     e.preventDefault()
-    axiosWithAuth().post('contact/add', {
-      contact: {
-      name: newContact.contactName,
-      address: newContact.contactAddress,
-      userId: user.uid
+    axiosWithAuth().post("users/update", { 
+      user: {
+        address: settings.address,
+        defaultRadius: settings.defaultRadius
+      }
+    })
+    .then(res => {
+      setData(res.data)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
+
+  const addCategory = e => {
+    e.preventDefault()
+    axiosWithAuth().post("users/category", {
+      category: {
+        category: category,
+        userId: user.uid
+      }
+    })
+    .then(res => {
+      setData(res.data)
+      setCategory("")
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
+
+  const removeCategory = (id) => {
+    axiosWithAuth().delete(`users/category/${id}`, { 
+      category: {
+        id: id
     }})
     .then(res => {
       setData(res.data)
@@ -104,14 +126,49 @@ const Dashboard = ({user, contacts, setData}) => {
       console.log(err.message)
     })
   }
+
+  const addContact = e => {
+    e.preventDefault()
+    axiosWithAuth().post("contact/add", {
+      contact: {
+      name: newContact.contactName,
+      address: newContact.contactAddress,
+      userId: user.uid
+    }})
+    .then(res => {
+      setData(res.data)
+      setNewContact({
+        contactName: "",
+        contactAddress: ""
+      })
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
+
+  const removeContact = id => {
+    axiosWithAuth().delete(`contact/remove/${id}`)
+    .then(res => {
+      setData(res.data)
+      setNewContact({
+        contactName: "",
+        contactAddress: ""
+      })
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
+
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />
       {/* Hero Content */}
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <Typography
-          component="h1"
-          variant="h2"
+          component="h3"
+          variant="h4"
           align="center"
           color="textPrimary"
           gutterBottom
@@ -131,16 +188,14 @@ const Dashboard = ({user, contacts, setData}) => {
       {/* End Hero Content */}
       {/* Main Cards */}
       <Container component="main">
-        <Grid container spacing={3} alignItems="center">
+        <Grid container spacing={3}>
           <Grid item xs={6}>
             <Card>
               <CardContent>
                 <Typography component="h1" variant="h5">
                   Account Settings
                 </Typography>
-                <form className={classes.form} autoComplete="off">
-                  {" "}
-                  {/* Add onSubmit */}
+                <form className={classes.form} autoComplete="off" onSubmit={updateSettings}>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -155,21 +210,11 @@ const Dashboard = ({user, contacts, setData}) => {
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    id="radius"
+                    id="defaultRadius"
                     label="Default Radius"
-                    name="radius"
+                    name="defaultRadius"
                     type="integer"
                     value={settings.defaultRadius}
-                    onChange={onChange}
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    id="category"
-                    label="Add Category"
-                    name="category"
-                    value={settings.categories}
                     onChange={onChange}
                   />
                   <Button
@@ -179,7 +224,34 @@ const Dashboard = ({user, contacts, setData}) => {
                     color="primary"
                     className={classes.submit}
                   >
-                    Update
+                    Update Settings
+                  </Button>
+                </form>
+                <Typography component="h1" variant="h5">
+                  Search Categories
+                </Typography>
+                {user && user.categories.length > 0  ? <Typography component="p">
+                  Current Categories: {user.categories.map(each => <span key={each.id}><span className="categories">{each.category}</span><span onClick={() => removeCategory(each.id)}>X</span></span>)}
+                </Typography> : null}
+                <form className={classes.form} autoComplete="off" onSubmit={addCategory}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    id="category"
+                    label="Add Category"
+                    name="category"
+                    value={category}
+                    onChange={e => setCategory(e.target.value)}
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Add Category
                   </Button>
                 </form>
               </CardContent>
@@ -191,26 +263,26 @@ const Dashboard = ({user, contacts, setData}) => {
                 <Typography component="h1" variant="h5">
                   New Contact
                 </Typography>
-                <form className={classes.form} autoComplete='off'>
+                <form className={classes.form} onSubmit={addContact} autoComplete="off">
                   <TextField
-                  variant='outlined'
-                  margin='normal'
+                  variant="outlined"
+                  margin="normal"
                   required
                   fullWidth
-                  id='contactName'
-                  label='Contact Name'
-                  name='contactName'
+                  id="contactName"
+                  label="Contact Name"
+                  name="contactName"
                   value={newContact.contactName}
                   onChange={newContactOnChange}
                   />
                   <TextField
-                  variant='outlined'
-                  margin='normal'
+                  variant="outlined"
+                  margin="normal"
                   required
                   fullWidth
-                  id='contactAddress'
-                  label='Contact Address'
-                  name='contactAddress'
+                  id="contactAddress"
+                  label="Contact Address"
+                  name="contactAddress"
                   value={newContact.contactAddress}
                   onChange={newContactOnChange}
                   />
@@ -220,7 +292,6 @@ const Dashboard = ({user, contacts, setData}) => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={addContact}
                       >
                   Add Contact
                 </Button>
@@ -240,7 +311,7 @@ const Dashboard = ({user, contacts, setData}) => {
                           />
                           <ListItemSecondaryAction>
                             <IconButton edge="end" aria-label="delete">
-                              <Delete />
+                              <Delete onClick={() => removeContact(contact.addressId)} />
                             </IconButton>
                           </ListItemSecondaryAction>
                         </ListItem>
