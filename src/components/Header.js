@@ -114,7 +114,7 @@ const Header = ({ data, clearUser }) => {
             <form className={classes.container}>
               <FormControl className={classes.formControl}>
                 {data.contacts.length === 0 ? (
-                  <TextField id="standard-basic" label="Address" />
+                  <TextField id="standard-basic" label="Address" value={customContact} onChange={e => setCustomContact(e.target.value)} />
                 ) : (
                   <RadioGroup row aria-label="contactType" labelId="demo-dialog-type-label"  name="contactType" value={customContact} onChange={handleContactTypeChange}>
                     <FormControlLabel value="dropdown" control={<Radio checked={contactDropdown} />} label="Saved Contacts" />
