@@ -3,7 +3,7 @@ import { auth } from "../firebase";
 import { useHistory } from "react-router-dom";
 
 // Material-UI Imports:
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, FormControlLabel, Radio, RadioGroup, TextField, Toolbar, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
@@ -34,17 +34,21 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(1),
     minWidth: 500,
   },
 }));
 
-const Header = ({ user, clearUser }) => {
+const Header = ({ data, clearUser }) => {
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
-  const [contact, setContact] = useState("");
-  const [category, setCategory] = useState("");
+  const [open, setOpen] = useState(false)
+  const [contact, setContact] = useState("")
+  const [customContact, setCustomContact] = useState("")
+  const [category, setCategory] = useState("")
+  const [customCategory, setCustomCategory] = useState("")
+  const [contactDropdown, setContactDropdown] = useState(true)
+  const [categoryDropdown, setCategoryDropdown] = useState(true)
 
   const handleChange = (event) => {
     setContact("");
@@ -57,7 +61,6 @@ const Header = ({ user, clearUser }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
   const history = useHistory();
 
   const onLogOut = () => {
@@ -68,23 +71,33 @@ const Header = ({ user, clearUser }) => {
     });
   };
 
+  const handleContactTypeChange = (e) => {
+    const { value } = e.target
+    setContactDropdown(value === "dropdown" ? true : false)
+  }
+
+  const handleCategoryTypeChange = (e) => {
+    const { value } = e.target
+    setCategoryDropdown(value === "dropdown" ? true : false)
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           Half Way There
         </Typography>
-        {user === null ? (
+        {data.user === null ? (
           <Button href="/register" color="inherit">
             Register
           </Button>
         ) : null}
-        {user === null ? (
+        {data.user === null ? (
           <Button href="/login" color="inherit">
             Login
           </Button>
         ) : null}
-        {user !== null ? (
+        {data.user !== null ? (
           <Button onClick={onLogOut} color="inherit">
             Log out
           </Button>
@@ -100,40 +113,70 @@ const Header = ({ user, clearUser }) => {
           <DialogContent>
             <form className={classes.container}>
               <FormControl className={classes.formControl}>
-                <InputLabel id="demo-dialog-select-label">Contact</InputLabel>
-                <Select
-                  labelId="demo-dialog-select-label"
-                  id="demo-dialog-select"
-                  value=""
-                  onChange={handleChange}
-                  input={<Input />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Contact 1</MenuItem>
-                  <MenuItem value={20}>Contact 2</MenuItem>
-                  <MenuItem value={30}>Contact 3</MenuItem>
-                </Select>
+                {data.contacts.length === 0 ? (
+                  <TextField id="standard-basic" label="Address" />
+                ) : (
+                  <RadioGroup row aria-label="contactType" labelId="demo-dialog-type-label"  name="contactType" value={customContact} onChange={handleContactTypeChange}>
+                    <FormControlLabel value="dropdown" control={<Radio checked={contactDropdown} />} label="Saved Contacts" />
+                    <FormControlLabel value="custom" control={<Radio checked={!contactDropdown} />} label="Custom Contact" />
+                  </RadioGroup>
+                )}
               </FormControl>
-
               <FormControl className={classes.formControl}>
-                <InputLabel id="demo-dialog-select-label">Category</InputLabel>
-                <Select
-                  labelId="demo-dialog-select-label"
-                  id="demo-dialog-select"
-                  value=""
-                  onChange={handleChange}
-                  input={<Input />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Category 1</MenuItem>
-                  <MenuItem value={20}>Category 2</MenuItem>
-                  <MenuItem value={30}>Category 3</MenuItem>
-                </Select>
+              
+                {contactDropdown ? (
+                  <>
+                    <InputLabel id="demo-dialog-select-label">Contact</InputLabel>
+                    <Select
+                      labelId="demo-dialog-select-label"
+                      id="demo-dialog-select"
+                      value=""
+                      onChange={handleChange}
+                      input={<Input />}
+                    >
+                      {data.contacts.map(contact => {
+                        return <MenuItem value={contact.address}>{contact.contactName}</MenuItem>
+                      })}
+                    </Select>
+                  </>
+                ) : (
+                  <TextField id="standard-basic" label="Address" />
+                )}
               </FormControl>
+              {data.user ? (
+              <FormControl className={classes.formControl}>
+                { data.user.categories.length === 0 ? (
+                  <TextField id="standard-basic" label="Category" />
+                ) : (
+                  <RadioGroup row aria-label="contactType" labelId="demo-dialog-type-label"  name="contactType" value={customContact} onChange={handleCategoryTypeChange}>
+                    <FormControlLabel value="dropdown" control={<Radio checked={categoryDropdown} />} label="Saved Categories" />
+                    <FormControlLabel value="custom" control={<Radio checked={!categoryDropdown} />} label="Custom Category" />
+                  </RadioGroup>
+                )}
+              </FormControl>
+              ) : null}
+              {data.user ? (
+                <FormControl className={classes.formControl}>
+                  {categoryDropdown ? (
+                    <>
+                      <InputLabel id="demo-dialog-select-label-2">Category</InputLabel>
+                      <Select
+                        labelId="demo-dialog-select-label-2"
+                        id="demo-dialog-select-cat"
+                        value=""
+                        onChange={handleChange}
+                        input={<Input />}
+                      >
+                        {data.user.categories.map(category => {
+                          return <MenuItem value={category.category}>{category.category}</MenuItem>
+                        })}
+                      </Select>
+                    </>
+                  ) : (
+                    <TextField id="standard-basic" label="Category" />
+                  )}
+                </FormControl>
+              ) : null}
             </form>
             <div className={classes.rootTwo}>
               <Typography id="input-slider" gutterBottom>

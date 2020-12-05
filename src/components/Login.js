@@ -75,7 +75,7 @@ const Login = ({ setData }) => {
     }
 
     // Create a token then verify on the server side
-    const onSubmit = async e => {
+    const onSubmit = e => {
         e.preventDefault()
         setLoading(true)
         auth.signInWithEmailAndPassword(form.email, form.password)

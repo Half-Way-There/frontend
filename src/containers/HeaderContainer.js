@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import { clearUser } from '../Store/actions'
 
 const mapStateToProps = (state) => ({
-  user: state.data.user
+  data: state.data
 })
 
 export default connect(mapStateToProps, { clearUser })(Header)

@@ -42,7 +42,6 @@ function App() {
   }
 
   function calcRoute(map) {
-    console.log("Calc Route Has Begun")
     const directionsService = new window.google.maps.DirectionsService()
     const directionsRenderer = new window.google.maps.DirectionsRenderer()
     directionsRenderer.setMap(map);
@@ -208,8 +207,6 @@ function App() {
                         console.log("error: status=" + status);
                       }
                     });
-                  } else {
-                    console.log('nope')
                   }
               });
             } else {

@@ -13,7 +13,6 @@ function Map({ options, onMount, className, onMountProps }) {
     const onLoad = () => setMap(new window.google.maps.Map(ref.current, options))
     if (!window.google) {
       const script = document.createElement(`script`)
-      console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY)
       script.src =
         `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=geometry&libraries=places`
       document.head.append(script)
@@ -90,8 +89,6 @@ function Map({ options, onMount, className, onMountProps }) {
         window.google.maps.Polyline.prototype.GetPointsAtDistance  = window.google.maps.Polygon.prototype.GetPointsAtDistance;
       }
       loadEpoly()
-    } else {
-      console.log("No Google")
     }
   }, [window.google])
 
