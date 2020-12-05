@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { axiosWithAuth } from "../Auth/axiosWithAuth"
+import HeaderContainer from '../containers/HeaderContainer'
 
 // Material-UI Imports:
 import { makeStyles } from "@material-ui/core/styles"
@@ -162,6 +163,8 @@ const Dashboard = ({user, contacts, setData}) => {
   }
 
   return (
+    <>
+    <HeaderContainer />
     <Container component="main" maxWidth="md">
       <CssBaseline />
       {/* Hero Content */}
@@ -326,6 +329,7 @@ const Dashboard = ({user, contacts, setData}) => {
         {/* End Main Cards */}
       </Container>
     </Container>
+    </>
   );
 };
 export default Dashboard;
