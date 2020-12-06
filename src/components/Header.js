@@ -192,7 +192,7 @@ const Header = ({ data, clearUser }) => {
                       >
                         {data.contacts.map((contact) => {
                           return (
-                            <MenuItem value={contact.address}>
+                            <MenuItem value={contact.address} key={contact.addressId}>
                               {contact.contactName}
                             </MenuItem>
                           );
@@ -257,7 +257,7 @@ const Header = ({ data, clearUser }) => {
                         >
                           {data.user.categories.map((category) => {
                             return (
-                              <MenuItem value={category.category}>
+                              <MenuItem value={category.category} key={category.id}>
                                 {category.category}
                               </MenuItem>
                             );
@@ -306,15 +306,6 @@ const Header = ({ data, clearUser }) => {
     </AppBar>
     </div>
     </>
-    // <div>
-    //     <nav>
-    //         <a href='/register'>Register</a>
-    //         <a href='/login'>Login</a>
-    //         <button onClick={onLogOut}>
-    //             Log out
-    //         </button>
-    //     </nav>
-    // </div>
   );
 };
 export default Header;

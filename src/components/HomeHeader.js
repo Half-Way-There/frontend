@@ -65,9 +65,9 @@ const HomeHeader = () => {
           <h1 className={classes.appBarTitle}>
             HalfWay <span className={classes.colorText}>There</span>
           </h1>
-          <Button className={classes.appBarButton}>Register</Button>
-          <Button className={classes.appBarButton}>Login</Button>
-          <Button className={classes.appBarButton}>Guest</Button>
+          <Button href="/register" className={classes.appBarButton}>Register</Button>
+          <Button href="/login" className={classes.appBarButton}>Login</Button>
+          <Button href="/guest-view" className={classes.appBarButton}>Guest</Button>
         </Toolbar>
       </AppBar>
 
@@ -75,10 +75,10 @@ const HomeHeader = () => {
           <h1 className={classes.title}>
               The most innovative way to meet up <br />Halfway <span className={classes.colorText}>There</span>
           </h1>
-          <Button className={classes.containerButton}>
+          <Button href="/register" className={classes.containerButton}>
               Register
           </Button>
-          <Button className={classes.containerButton}>
+          <Button href="/login" className={classes.containerButton}>
               Login
           </Button>
       </div>

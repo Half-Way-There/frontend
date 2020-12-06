@@ -61,8 +61,9 @@ const Register = () => {
     const [ form, setForm ] = useState({
         email: '',
         password: '',
-        confirmPassword: ''
-    })
+        confirmPassword: '',
+        address: ''    
+      })
     const [ error, setError ] = useState('')
     const [ loading, setLoading ] = useState(false)
     const history = useHistory()
@@ -86,7 +87,7 @@ const Register = () => {
                 return user.getIdToken().then((idToken) => {
                   localStorage.setItem('token', idToken)
                   axios
-                    .post("http://localhost:5001/auth/register", { idToken }, {
+                    .post("http://localhost:5001/auth/register", { address: form.address }, {
                       headers: {
                         authorization: idToken
                       }
@@ -125,6 +126,19 @@ const Register = () => {
                                 name='email'
                                 autoComplete='email'
                                 value={form.email}
+                                onChange={onChange}
+                        />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant='outlined'
+                                required
+                                fullWidth
+                                id='address'
+                                label='Address'
+                                name='address'
+                                autoComplete='address'
+                                value={form.address}
                                 onChange={onChange}
                         />
                         </Grid>

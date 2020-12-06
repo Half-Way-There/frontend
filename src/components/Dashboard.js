@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
 import CssBaseline from "@material-ui/core/CssBaseline"
-import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField } from "@material-ui/core"
+import { IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 import Card from "@material-ui/core/Card"
@@ -98,7 +98,7 @@ const Dashboard = ({user, contacts, setData}) => {
       .catch(err => {
           console.log(err.message)
       })
-  }, [])
+  }, [setData])
 
   const onChange = (e) => {
     const { name, value } = e.target
@@ -202,18 +202,6 @@ const Dashboard = ({user, contacts, setData}) => {
     <HeaderContainer />
     <Container component="main" maxWidth="md">
       <CssBaseline />
-      {/* Hero Content */}
-      <Container maxWidth="sm" component="main" className={classes.heroContent}>
-        <Typography
-          component="h3"
-          variant="h4"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-        >
-        </Typography>
-      </Container>
-      {/* End Hero Content */}
       {/* Main Cards */}
       <Container>
         <Grid container spacing={3}>
@@ -343,8 +331,8 @@ const Dashboard = ({user, contacts, setData}) => {
                             primary={contact.contactName}
                           />
                           <ListItemSecondaryAction>
-                            <IconButton className={classes.deleteContact} edge="end" size='small' aria-label="delete">
-                              <Delete onClick={() => removeContact(contact.addressId)} />
+                            <IconButton onClick={() => removeContact(contact.addressId)} className={classes.deleteContact} edge="end" size='small' aria-label="delete">
+                              <Delete />
                             </IconButton>
                           </ListItemSecondaryAction>
                         </ListItem>
