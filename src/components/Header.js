@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
   title: {
-    flexGrow: 1,
+    flexGrow: "1",
+    color: "white",
+    fontFamily: "Ubuntu",
+    textTransform: "uppercase",
   },
   container: {
     display: "flex",
@@ -42,6 +45,25 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 500,
+  },
+  colorText: {
+    color: "#f5c71a",
+  },
+  appBarWrapper: {
+    width: "80%",
+    margin: "0 auto",
+  },
+  appBar: {
+    background: "none",
+  },
+  appBarButton: {
+    color: "white",
+    fontFamily: "Ubuntu",
+    fontWeight: 600,
+    fontSize: "1rem",
+    "&:hover": {
+      color: "#f5c71a",
+    },
   },
 }));
 const Header = ({ data, clearUser }) => {
@@ -91,27 +113,30 @@ const Header = ({ data, clearUser }) => {
     setCategory(value)
   }
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Half Way There
-        </Typography>
+    <>
+    <div className={classes.root}>
+      
+    <AppBar position="static" className={classes.appBar} elevation={0}>
+      <Toolbar className={classes.appBarWrapper}>
+        <h1 className={classes.title}>
+          Halfway <span className={classes.colorText}>There</span>
+        </h1>
         {data.user === null ? (
-          <Button href="/register" color="inherit">
+          <Button className={classes.appBarButton} href="/register" color="inherit">
             Register
           </Button>
         ) : null}
         {data.user === null ? (
-          <Button href="/login" color="inherit">
+          <Button className={classes.appBarButton} href="/login" color="inherit">
             Login
           </Button>
         ) : null}
         {data.user !== null ? (
-          <Button onClick={onLogOut} color="inherit">
+          <Button className={classes.appBarButton} onClick={onLogOut} color="inherit">
             Log out
           </Button>
         ) : null}
-        <Button onClick={handleClickOpen} color="inherit">
+        <Button className={classes.appBarButton} onClick={handleClickOpen} color="inherit">
           Search
         </Button>
         <Dialog
@@ -279,6 +304,8 @@ const Header = ({ data, clearUser }) => {
         </Dialog>
       </Toolbar>
     </AppBar>
+    </div>
+    </>
     // <div>
     //     <nav>
     //         <a href='/register'>Register</a>

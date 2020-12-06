@@ -13,29 +13,63 @@ import Grid from "@material-ui/core/Grid"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import { Delete, Edit } from "@material-ui/icons"
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
 
 // Material-UI Setting Styles:
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%",
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background: '#17171B',
+    fontWeight: 600,
+    fontFamily: 'Ubuntu',
+    '&:hover': {
+      background: '#f5c71a',
+      color: 'black'
+    }
   },
   heroContent: {
     padding: theme.spacing(8, 0, 6),
   },
+  root: {
+    minHeight: '100vh',
+    background: '#121212',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+  },
+  gridItem: {
+    background: '#F0F0F1'
+  },
+  fab: {
+    color: '#fff',
+    background: '#17171B',
+    '&:hover': {
+      color: 'black',
+      background: '#f5c71a'
+    }
+  },
+  deleteContact: {
+    color: 'white',
+    background: '#17171B',
+    '&:hover': {
+      color: 'black',
+      background: '#f5c71a'
+    }
+  },
+  textField: {
+    '& label.Mui-focused': {
+      color: 'black',
+    },
+    // Can't figure out how to make focused border color to #f5c71a
+  }
 }));
 
 const Dashboard = ({user, contacts, setData}) => {
@@ -164,6 +198,7 @@ const Dashboard = ({user, contacts, setData}) => {
 
   return (
     <>
+    <div className={classes.root}>
     <HeaderContainer />
     <Container component="main" maxWidth="md">
       <CssBaseline />
@@ -176,24 +211,14 @@ const Dashboard = ({user, contacts, setData}) => {
           color="textPrimary"
           gutterBottom
         >
-          Welcome back, User!
-        </Typography>
-        <Typography
-          variant="h5"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          This is your personal dashboard! Quickly control your account
-          settings, contact lists, and additional options.
         </Typography>
       </Container>
       {/* End Hero Content */}
       {/* Main Cards */}
-      <Container component="main">
+      <Container>
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Card>
+            <Card className={classes.gridItem}>
               <CardContent>
                 <Typography component="h1" variant="h5">
                   Account Settings
@@ -208,6 +233,7 @@ const Dashboard = ({user, contacts, setData}) => {
                     name="address"
                     value={settings.address}
                     onChange={onChange}
+                    className={classes.textField}
                   />
                   <TextField
                     variant="outlined"
@@ -219,6 +245,7 @@ const Dashboard = ({user, contacts, setData}) => {
                     type="integer"
                     value={settings.defaultRadius}
                     onChange={onChange}
+                    className={classes.textField}
                   />
                   <Button
                     type="submit"
@@ -246,6 +273,7 @@ const Dashboard = ({user, contacts, setData}) => {
                     name="category"
                     value={category}
                     onChange={e => setCategory(e.target.value)}
+                    className={classes.textField}
                   />
                   <Button
                     type="submit"
@@ -261,7 +289,7 @@ const Dashboard = ({user, contacts, setData}) => {
             </Card>
           </Grid>
           <Grid item xs={6}>
-            <Card>
+            <Card className={classes.gridItem}>
               <CardContent>
                 <Typography component="h1" variant="h5">
                   New Contact
@@ -277,6 +305,7 @@ const Dashboard = ({user, contacts, setData}) => {
                   name="contactName"
                   value={newContact.contactName}
                   onChange={newContactOnChange}
+                  className={classes.textField}
                   />
                   <TextField
                   variant="outlined"
@@ -288,6 +317,7 @@ const Dashboard = ({user, contacts, setData}) => {
                   name="contactAddress"
                   value={newContact.contactAddress}
                   onChange={newContactOnChange}
+                  className={classes.textField}
                   />
                   <Button
                         type="submit"
@@ -305,15 +335,15 @@ const Dashboard = ({user, contacts, setData}) => {
                       return (
                         <ListItem key={contact.addressId}>
                           <ListItemAvatar>
-                            <Avatar>
-                              <Edit />
-                            </Avatar>
+                          <Fab className={classes.fab} size='small' aria-label="edit">
+                            <EditIcon />
+                          </Fab>
                           </ListItemAvatar>
-                          <ListItemText
+                          <ListItemText 
                             primary={contact.contactName}
                           />
                           <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete">
+                            <IconButton className={classes.deleteContact} edge="end" size='small' aria-label="delete">
                               <Delete onClick={() => removeContact(contact.addressId)} />
                             </IconButton>
                           </ListItemSecondaryAction>
@@ -329,6 +359,7 @@ const Dashboard = ({user, contacts, setData}) => {
         {/* End Main Cards */}
       </Container>
     </Container>
+    </div>
     </>
   );
 };
