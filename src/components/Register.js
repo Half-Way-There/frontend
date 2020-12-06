@@ -16,6 +16,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import HeaderContainer from '../containers/HeaderContainer';
 
 // Material-UI Copyright Information:
 function Copyright() {
@@ -46,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
     form: {
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(3),
+    },
+    root: {
+      minHeight: '100vh',
+      background: '#121212',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
@@ -105,99 +112,104 @@ const Register = () => {
     }
 
     return (
-        <Container component='main' maxWidth='xs'>
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
+      <>
+        <div className={classes.root}>
+          <HeaderContainer />
+          <Container component='main' maxWidth='xs'>
+              <CssBaseline />
+              <div className={classes.paper}>
+                  <Avatar className={classes.avatar}>
 
-                </Avatar>
-                <Typography component='h1' variant='h5'>
-                    Register
-                </Typography>
-                <form onSubmit={onSubmit} className={classes.form} noValidate autoComplete='off'>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant='outlined'
-                                required
-                                fullWidth
-                                id='email'
-                                label='Email Address'
-                                name='email'
-                                autoComplete='email'
-                                value={form.email}
-                                onChange={onChange}
-                        />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant='outlined'
-                                required
-                                fullWidth
-                                id='address'
-                                label='Address'
-                                name='address'
-                                autoComplete='address'
-                                value={form.address}
-                                onChange={onChange}
-                        />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant='outlined'
-                                required
-                                fullWidth
-                                name='password'
-                                label='Password'
-                                type='password'
-                                id='password'
-                                autoComplete='current-password'
-                                value={form.password}
-                                onChange={onChange}
-                        />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant='outlined'
-                                required
-                                fullWidth
-                                name='confirmPassword'
-                                label='Confirm Password'
-                                type='password'
-                                id='confirmPassword'
-                                value={form.confirmPassword}
-                                onChange={onChange}
-                        />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value='allowExtraEmails' color='primary' />}
-                                label='I want to receive marketing promotions and updates via email from Half-Way-There.'
-                        />
-                        </Grid>
-                    </Grid>
-                    <Button
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    color='primary'
-                    className={classes.submit}
-                >
-                    Register
-                </Button>
-                    <Grid container justify='flex-end'>
-                        <Grid item>
-                            <Link href='/login' variant='body2'>
-                                Already have an account? Login
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-            <Box mt={5}>
-                <Copyright />
-            </Box>
-        </Container>
+                  </Avatar>
+                  <Typography component='h1' variant='h5'>
+                      Register
+                  </Typography>
+                  <form onSubmit={onSubmit} className={classes.form} noValidate autoComplete='off'>
+                      <Grid container spacing={2}>
+                          <Grid item xs={12}>
+                              <TextField
+                                  variant='outlined'
+                                  required
+                                  fullWidth
+                                  id='email'
+                                  label='Email Address'
+                                  name='email'
+                                  autoComplete='email'
+                                  value={form.email}
+                                  onChange={onChange}
+                          />
+                          </Grid>
+                          <Grid item xs={12}>
+                              <TextField
+                                  variant='outlined'
+                                  required
+                                  fullWidth
+                                  id='address'
+                                  label='Address'
+                                  name='address'
+                                  autoComplete='address'
+                                  value={form.address}
+                                  onChange={onChange}
+                          />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                              <TextField
+                                  variant='outlined'
+                                  required
+                                  fullWidth
+                                  name='password'
+                                  label='Password'
+                                  type='password'
+                                  id='password'
+                                  autoComplete='current-password'
+                                  value={form.password}
+                                  onChange={onChange}
+                          />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                              <TextField
+                                  variant='outlined'
+                                  required
+                                  fullWidth
+                                  name='confirmPassword'
+                                  label='Confirm Password'
+                                  type='password'
+                                  id='confirmPassword'
+                                  value={form.confirmPassword}
+                                  onChange={onChange}
+                          />
+                          </Grid>
+                          <Grid item xs={12}>
+                              <FormControlLabel
+                                  control={<Checkbox value='allowExtraEmails' color='primary' />}
+                                  label='I want to receive marketing promotions and updates via email from Half-Way-There.'
+                          />
+                          </Grid>
+                      </Grid>
+                      <Button
+                      type='submit'
+                      fullWidth
+                      variant='contained'
+                      color='primary'
+                      className={classes.submit}
+                  >
+                      Register
+                  </Button>
+                      <Grid container justify='flex-end'>
+                          <Grid item>
+                              <Link href='/login' variant='body2'>
+                                  Already have an account? Login
+                              </Link>
+                          </Grid>
+                      </Grid>
+                  </form>
+              </div>
+              <Box mt={5}>
+                  <Copyright />
+              </Box>
+          </Container>
+        </div>
+      </>
     )
 }
 
