@@ -60,16 +60,6 @@ const HomeHeader = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar className={classes.appBar} elevation={0}>
-        <Toolbar className={classes.appBarWrapper}>
-          <h1 className={classes.appBarTitle}>
-            HalfWay <span className={classes.colorText}>There</span>
-          </h1>
-          <Button href="/register" className={classes.appBarButton}>Register</Button>
-          <Button href="/login" className={classes.appBarButton}>Login</Button>
-          <Button href="/guest-view" className={classes.appBarButton}>Guest</Button>
-        </Toolbar>
-      </AppBar>
 
       <div className={classes.container}>
           <h1 className={classes.title}>

@@ -1,11 +1,12 @@
-import { SET_DATA, CLEAR_USER } from '../actions'
+import { SET_DATA, CLEAR_USER, SET_SEARCH } from '../actions'
 
 
 const initialState = {
     data: {
       user: null,
       contacts: []
-    }
+    },
+    searchInfo: null
 }
 
 const Reducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const Reducer = (state = initialState, action) => {
                   user: null,
                   contacts: []
                 }
+            }
+        case SET_SEARCH:
+            return {
+                ...state,
+                searchInfo: action.payload
             }
         default:
             return state

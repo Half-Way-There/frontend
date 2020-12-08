@@ -16,7 +16,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import HeaderContainer from '../containers/HeaderContainer';
 
 // Material-UI Copyright Information:
 function Copyright() {
@@ -35,7 +34,7 @@ function Copyright() {
   // Material-UI Styling:
   const useStyles = makeStyles((theme) => ({
     paper: {
-      marginTop: theme.spacing(8),
+      paddingTop: theme.spacing(8),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -112,7 +111,6 @@ const Login = ({ setData }) => {
     return (
         <>
           <div className={classes.root}>
-            <HeaderContainer />
             <Container component='main' maxWidth='xs'>
               
                 <CssBaseline />

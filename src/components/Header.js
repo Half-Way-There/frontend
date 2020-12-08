@@ -54,7 +54,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
   },
   appBar: {
-    background: "none",
+    background: "black",
+    boxShadow: '1px 1px 3px black',
+    position: 'relative',
+    zIndex: 1,
   },
   appBarButton: {
     color: "white",
@@ -75,6 +78,57 @@ const Header = ({ data, clearUser }) => {
   const [customCategory, setCustomCategory] = useState("");
   const [contactDropdown, setContactDropdown] = useState(true);
   const [categoryDropdown, setCategoryDropdown] = useState(true);
+  const [defaultRadius, setDefaultRadius] = useState()
+
+  // Marks for Slider labels
+  const marks = [
+    {
+      value: 1,
+      label: '1'
+    },
+    {
+      value: 2,
+      label: '2'
+    },
+    {
+      value: 3,
+      label: '3'
+    },
+    {
+      value: 4,
+      label: '4'
+    },
+    {
+      value: 5,
+      label: '5'
+    },
+    {
+      value: 6,
+      label: '6'
+    },
+    {
+      value: 7,
+      label: '7'
+    },
+    {
+      value: 8,
+      label: '8'
+    },
+    {
+      value: 9,
+      label: '9'
+    },
+    {
+      value: 10,
+      label: '10'
+    },
+  ]
+
+  // Function for showing Radius labels
+  const valueText = (value) => {
+    return `${value}`
+  }
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -87,6 +141,7 @@ const Header = ({ data, clearUser }) => {
     setCustomCategory('')
     setContactDropdown(true)
     setCategoryDropdown(true)
+    setDefaultRadius(data.user.defaultRadius)
   };
   const history = useHistory();
   const onLogOut = () => {
@@ -136,9 +191,11 @@ const Header = ({ data, clearUser }) => {
             Log out
           </Button>
         ) : null}
+        {data.user !== null ? (
         <Button className={classes.appBarButton} onClick={handleClickOpen} color="inherit">
           Search
         </Button>
+        ) : null}
         <Dialog
           disableBackdropClick
           disableEscapeKeyDown
@@ -283,12 +340,15 @@ const Header = ({ data, clearUser }) => {
                 Radius
               </Typography>
               <Slider
-                defaultValue={0.00000005}
+                defaultValue={data.user !== null ? data.user.defaultRadius : 3}
                 aria-labelledby="discrete-slider-small-steps"
                 step={1}
-                marks
+                getAriaValueText={valueText}
+                marks={marks}
                 min={1}
                 max={10}
+                value={defaultRadius}
+                onChange={e => setDefaultRadius(e.target.value)}
                 valueLabelDisplay="auto"
               />
             </div>
