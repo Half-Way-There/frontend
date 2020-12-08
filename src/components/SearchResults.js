@@ -15,164 +15,163 @@ import {
   Slider,
   TextField,
   Typography,
-} from "@material-ui/core";
-import React, { useState, useEffect } from "react";
-import { axiosWithAuth } from "../Auth/axiosWithAuth";
-import {makeStyles} from '@material-ui/core/styles'
+} from "@material-ui/core"
+import React, { useState, useEffect } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import axiosWithAuth from "../Auth/axiosWithAuth"
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
-    rootTwo: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    title: {
-      flexGrow: "1",
-      color: "white",
-      fontFamily: "Ubuntu",
-      textTransform: "uppercase",
-    },
-    container: {
-      display: "flex",
-      flexWrap: "wrap",
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 500,
-    },
-    colorText: {
+  root: {
+    flexGrow: 1,
+  },
+  rootTwo: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  title: {
+    flexGrow: "1",
+    color: "white",
+    fontFamily: "Ubuntu",
+    textTransform: "uppercase",
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 500,
+  },
+  colorText: {
+    color: "#f5c71a",
+  },
+  appBarWrapper: {
+    width: "80%",
+    margin: "0 auto",
+  },
+  appBar: {
+    background: "black",
+    boxShadow: "1px 1px 3px black",
+    position: "relative",
+    zIndex: 1,
+  },
+  appBarButton: {
+    color: "white",
+    fontFamily: "Ubuntu",
+    fontWeight: 600,
+    fontSize: "1rem",
+    "&:hover": {
       color: "#f5c71a",
     },
-    appBarWrapper: {
-      width: "80%",
-      margin: "0 auto",
-    },
-    appBar: {
-      background: "black",
-      boxShadow: '1px 1px 3px black',
-      position: 'relative',
-      zIndex: 1,
-    },
-    appBarButton: {
-      color: "white",
-      fontFamily: "Ubuntu",
-      fontWeight: 600,
-      fontSize: "1rem",
-      "&:hover": {
-        color: "#f5c71a",
-      },
-    },
-  }));
+  },
+}))
 
-const SearchResults = ({ data, searchInfo, setData, setSearch }) => {
+const SearchResults = ({
+  data, searchInfo, setData, setSearch,
+}) => {
+  // Declaring Material-UI Styles
+  const classes = useStyles()
 
-    // Declaring Material-UI Styles
-    const classes = useStyles()
-
-  const [contact, setContact] = useState("");
-  const [customContact, setCustomContact] = useState("");
-  const [category, setCategory] = useState("");
-  const [customCategory, setCustomCategory] = useState("");
-  const [contactDropdown, setContactDropdown] = useState(true);
-  const [categoryDropdown, setCategoryDropdown] = useState(true);
-  const [defaultRadius, setDefaultRadius] = useState();
+  const [contact, setContact] = useState("")
+  const [customContact, setCustomContact] = useState("")
+  const [category, setCategory] = useState("")
+  const [customCategory, setCustomCategory] = useState("")
+  const [contactDropdown, setContactDropdown] = useState(true)
+  const [categoryDropdown, setCategoryDropdown] = useState(true)
+  const [defaultRadius, setDefaultRadius] = useState()
 
   // handle Changes
 
   const handleContactTypeChange = (e) => {
-    const { value } = e.target;
-    setContactDropdown(value === "dropdown" ? true : false);
-  };
+    const { value } = e.target
+    setContactDropdown(value === "dropdown")
+  }
   const handleContactDropdown = (e) => {
-    const { value } = e.target;
+    const { value } = e.target
     setContact(value)
   }
   const handleCategoryTypeChange = (e) => {
-    const { value } = e.target;
-    setCategoryDropdown(value === "dropdown" ? true : false);
-  };
+    const { value } = e.target
+    setCategoryDropdown(value === "dropdown")
+  }
   const handleCategoryDropdown = (e) => {
-    const { value } = e.target;
+    const { value } = e.target
     setCategory(value)
   }
 
   const handleSubmit = () => {
-      
-}
+
+  }
 
   useEffect(() => {
     axiosWithAuth()
       .post("auth/login", {})
       .then((res) => {
-        setData(res.data);
+        setData(res.data)
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  }, [setData]);
+        console.log(err.message)
+      })
+  }, [setData])
 
   // Marks for Slider labels
   const marks = [
     {
       value: 1,
-      label: '1'
+      label: "1",
     },
     {
       value: 2,
-      label: '2'
+      label: "2",
     },
     {
       value: 3,
-      label: '3'
+      label: "3",
     },
     {
       value: 4,
-      label: '4'
+      label: "4",
     },
     {
       value: 5,
-      label: '5'
+      label: "5",
     },
     {
       value: 6,
-      label: '6'
+      label: "6",
     },
     {
       value: 7,
-      label: '7'
+      label: "7",
     },
     {
       value: 8,
-      label: '8'
+      label: "8",
     },
     {
       value: 9,
-      label: '9'
+      label: "9",
     },
     {
       value: 10,
-      label: '10'
+      label: "10",
     },
   ]
 
   // Function for showing Radius labels
-  const valueText = (value) => {
-    return `${value}`
-  }
+  const valueText = (value) => `${value}`
 
   return (
     <>
       {searchInfo !== null ? (
         {
-          /*Load Map*/
+          /* Load Map */
         }
       ) : (
         <Dialog
           disableBackdropClick
           disableEscapeKeyDown
-          open={true}
+          open
         >
           <DialogTitle>New Search</DialogTitle>
           <DialogContent>
@@ -219,16 +218,14 @@ const SearchResults = ({ data, searchInfo, setData, setSearch }) => {
                             onChange={handleContactDropdown}
                             input={<Input />}
                           >
-                            {data.contacts.map((contact) => {
-                              return (
-                                <MenuItem
-                                  value={contact.address}
-                                  key={contact.addressId}
-                                >
-                                  {contact.contactName}
-                                </MenuItem>
-                              );
-                            })}
+                            {data.contacts.map((person) => (
+                              <MenuItem
+                                value={person.address}
+                                key={person.addressId}
+                              >
+                                {person.contactName}
+                              </MenuItem>
+                            ))}
                           </Select>
                         </>
                       ) : (
@@ -287,16 +284,14 @@ const SearchResults = ({ data, searchInfo, setData, setSearch }) => {
                               onChange={handleCategoryDropdown}
                               input={<Input />}
                             >
-                              {data.user.categories.map((category) => {
-                                return (
-                                  <MenuItem
-                                    value={category.category}
-                                    key={category.id}
-                                  >
-                                    {category.category}
-                                  </MenuItem>
-                                );
-                              })}
+                              {data.user.categories.map((cat) => (
+                                <MenuItem
+                                  value={cat.category}
+                                  key={cat.id}
+                                >
+                                  {cat.category}
+                                </MenuItem>
+                              ))}
                             </Select>
                           </>
                         ) : (
@@ -339,7 +334,7 @@ const SearchResults = ({ data, searchInfo, setData, setSearch }) => {
         </Dialog>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SearchResults;
+export default SearchResults

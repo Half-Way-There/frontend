@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 const StyledMapRequest = styled.section`
   display: flex;
@@ -109,32 +109,31 @@ const StyledMapRequest = styled.section`
   }
 `
 
-function MapRequest(props) {
-  
+function MapRequest({ formData, submitInfo, setFormData }) {
   function handleSubmit(e) {
     e.preventDefault()
-    props.submitInfo()
+    submitInfo()
   }
   return (
     <StyledMapRequest className="clean">
       <div className="first-address">
         <h2>First Address: </h2>
-        <input type="text" name="firstAddress" id="start" value={props.formData.firstAddress} onChange={e => props.setFormData(e)} />
+        <input type="text" name="firstAddress" id="start" value={formData.firstAddress} onChange={(e) => setFormData(e)} />
       </div>
       <div className="second-address">
         <h2>Second Address: </h2>
-        <input type="text" name="secondAddress" id="end"  value={props.formData.secondAddress} onChange={e => props.setFormData(e)} />
+        <input type="text" name="secondAddress" id="end" value={formData.secondAddress} onChange={(e) => setFormData(e)} />
       </div>
       <div className="category">
         <h2>Category: </h2>
-        <input type="text" name="category" placeholder="Food, Coffee, etc..." id="category" value={props.formData.category}  onChange={e => props.setFormData(e)} />
+        <input type="text" name="category" placeholder="Food, Coffee, etc..." id="category" value={formData.category} onChange={(e) => setFormData(e)} />
       </div>
       <div className="radius">
         <h2>Radius :</h2>
-        <input type="number" name="radius" id="radius" placeholder="0 - 10" value={props.formData.radius} onChange={e => props.setFormData(e)} />
+        <input type="number" name="radius" id="radius" placeholder="0 - 10" value={formData.radius} onChange={(e) => setFormData(e)} />
       </div>
       <div className="button">
-        <button onClick={handleSubmit} id="findRoute">Check</button>
+        <button type="button" onClick={handleSubmit} id="findRoute">Check</button>
       </div>
     </StyledMapRequest>
   )

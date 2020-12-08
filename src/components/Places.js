@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 const StyledPlaces = styled.div`
   height: 100vh;
@@ -51,7 +51,7 @@ const StyledPlaces = styled.div`
 
 function Places() {
   return (
-    <StyledPlaces id="places"></StyledPlaces>
+    <StyledPlaces id="places" />
   )
 }
 

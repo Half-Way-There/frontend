@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { axiosWithAuth } from "../Auth/axiosWithAuth";
+import React, { useState, useEffect } from "react"
 
 // Material-UI Imports:
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { makeStyles } from "@material-ui/core/styles"
+import Container from "@material-ui/core/Container"
+import Typography from "@material-ui/core/Typography"
+import CssBaseline from "@material-ui/core/CssBaseline"
 import {
   IconButton,
   List,
@@ -14,23 +13,24 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   TextField,
-} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import { Delete, Edit } from "@material-ui/icons";
-import Fab from "@material-ui/core/Fab";
-import EditIcon from "@material-ui/icons/Edit";
+} from "@material-ui/core"
+import Button from "@material-ui/core/Button"
+import Grid from "@material-ui/core/Grid"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import { Delete } from "@material-ui/icons"
+import Fab from "@material-ui/core/Fab"
+import EditIcon from "@material-ui/icons/Edit"
+import axiosWithAuth from "../Auth/axiosWithAuth"
 
 // Material-UI Setting Styles:
 const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%",
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(0),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(1, 0, 1),
     background: "#17171B",
     fontWeight: 600,
     fontFamily: "Ubuntu",
@@ -39,19 +39,16 @@ const useStyles = makeStyles((theme) => ({
       color: "black",
     },
   },
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
   root: {
-    minHeight: "100vh",
+    minHeight: "90vh",
     background: "#121212",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(4),
   },
   gridItem: {
     background: "#F0F0F1",
-    height: "75vh",
+    height: "80vh",
   },
   fab: {
     color: "#fff",
@@ -73,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
     "& label.Mui-focused": {
       color: "black",
     },
-    // Can't figure out how to make focused border color to #f5c71a
   },
   cardFormat: {
     display: "flex",
@@ -86,9 +82,9 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     boxShadow: "inset 1px 1px 3px black",
     padding: "8px",
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
     "&::-webkit-scrollbar": {
       width: "10px",
       cursor: "pointer",
@@ -106,6 +102,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   listFormat: {
+    minHeight: "10vh",
     maxHeight: "37vh",
     overflowY: "auto",
     boxShadow: "inset 1px 1px 3px black",
@@ -124,56 +121,56 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar-thumb:hover": {
       background: "#555",
     },
-  }
-}));
+  },
+}))
 
 const Dashboard = ({ user, contacts, setData }) => {
-  //Material-UI Declaring Classes
-  const classes = useStyles();
-  const [dense, setDense] = useState(false);
+  // Material-UI Declaring Classes
+  const classes = useStyles()
+  const [dense] = useState(false)
   const [settings, setSettings] = useState({
     address: user ? user.address || "" : "",
     defaultRadius: user ? user.defaultRadius || "" : "",
-  });
-  const [category, setCategory] = useState("");
+  })
+  const [category, setCategory] = useState("")
   const [newContact, setNewContact] = useState({
     contactName: "",
     contactAddress: "",
-  });
+  })
 
   useEffect(() => {
     axiosWithAuth()
       .post("auth/login", {})
       .then((res) => {
-        setData(res.data);
+        setData(res.data)
         setSettings({
           address: res.data.user.address,
           defaultRadius: parseInt(res.data.user.defaultRadius, 10),
-        });
+        })
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  }, [setData]);
+        console.log(err.message)
+      })
+  }, [setData])
 
   const onChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setSettings({
       ...settings,
       [name]: value,
-    });
-  };
+    })
+  }
 
   const newContactOnChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setNewContact({
       ...newContact,
       [name]: value,
-    });
-  };
+    })
+  }
 
   const updateSettings = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     axiosWithAuth()
       .post("users/update", {
         user: {
@@ -182,48 +179,48 @@ const Dashboard = ({ user, contacts, setData }) => {
         },
       })
       .then((res) => {
-        setData(res.data);
+        setData(res.data)
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  };
+        console.log(err.message)
+      })
+  }
 
   const addCategory = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     axiosWithAuth()
       .post("users/category", {
         category: {
-          category: category,
+          category,
           userId: user.uid,
         },
       })
       .then((res) => {
-        setData(res.data);
-        setCategory("");
+        setData(res.data)
+        setCategory("")
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  };
+        console.log(err.message)
+      })
+  }
 
   const removeCategory = (id) => {
     axiosWithAuth()
       .delete(`users/category/${id}`, {
         category: {
-          id: id,
+          id,
         },
       })
       .then((res) => {
-        setData(res.data);
+        setData(res.data)
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  };
+        console.log(err.message)
+      })
+  }
 
   const addContact = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     axiosWithAuth()
       .post("contact/add", {
         contact: {
@@ -233,31 +230,31 @@ const Dashboard = ({ user, contacts, setData }) => {
         },
       })
       .then((res) => {
-        setData(res.data);
+        setData(res.data)
         setNewContact({
           contactName: "",
           contactAddress: "",
-        });
+        })
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  };
+        console.log(err.message)
+      })
+  }
 
   const removeContact = (id) => {
     axiosWithAuth()
       .delete(`contact/remove/${id}`)
       .then((res) => {
-        setData(res.data);
+        setData(res.data)
         setNewContact({
           contactName: "",
           contactAddress: "",
-        });
+        })
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  };
+        console.log(err.message)
+      })
+  }
 
   return (
     <>
@@ -322,7 +319,7 @@ const Dashboard = ({ user, contacts, setData }) => {
                               border: "1px solid black",
                               borderRadius: "5px",
                               padding: "3px 5px",
-                              margin: '0px 3px 5px 3px',
+                              margin: "0px 3px 5px 3px",
                               boxShadow: "1px 1px 3px black",
                             }}
                             key={each.id}
@@ -344,7 +341,7 @@ const Dashboard = ({ user, contacts, setData }) => {
                       autoComplete="off"
                       onSubmit={addCategory}
                     >
-                      <Typography variant='h5'>
+                      <Typography variant="h5">
                         New Category
                       </Typography>
                       <TextField
@@ -417,39 +414,35 @@ const Dashboard = ({ user, contacts, setData }) => {
                       </Button>
                     </form>
                     <div className={classes.demo}>
-                      <Typography variant='h5'>
+                      <Typography variant="h5">
                         Contacts
                       </Typography>
                       <List className={classes.listFormat} dense={dense}>
-                        {contacts.map((contact) => {
-                          return (
-                            <ListItem key={contact.addressId}>
-                              <ListItemAvatar>
-                                <Fab
-                                  className={classes.fab}
-                                  size="small"
-                                  aria-label="edit"
-                                >
-                                  <EditIcon />
-                                </Fab>
-                              </ListItemAvatar>
-                              <ListItemText primary={contact.contactName} />
-                              <ListItemSecondaryAction>
-                                <IconButton
-                                  onClick={() =>
-                                    removeContact(contact.addressId)
-                                  }
-                                  className={classes.deleteContact}
-                                  edge="end"
-                                  size="small"
-                                  aria-label="delete"
-                                >
-                                  <Delete />
-                                </IconButton>
-                              </ListItemSecondaryAction>
-                            </ListItem>
-                          );
-                        })}
+                        {contacts.map((contact) => (
+                          <ListItem key={contact.addressId}>
+                            <ListItemAvatar>
+                              <Fab
+                                className={classes.fab}
+                                size="small"
+                                aria-label="edit"
+                              >
+                                <EditIcon />
+                              </Fab>
+                            </ListItemAvatar>
+                            <ListItemText primary={contact.contactName} />
+                            <ListItemSecondaryAction>
+                              <IconButton
+                                onClick={() => removeContact(contact.addressId)}
+                                className={classes.deleteContact}
+                                edge="end"
+                                size="small"
+                                aria-label="delete"
+                              >
+                                <Delete />
+                              </IconButton>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        ))}
                       </List>
                     </div>
                   </CardContent>
@@ -461,6 +454,6 @@ const Dashboard = ({ user, contacts, setData }) => {
         </Container>
       </div>
     </>
-  );
-};
-export default Dashboard;
+  )
+}
+export default Dashboard

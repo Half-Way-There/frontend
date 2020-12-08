@@ -1,6 +1,8 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, Collapse, Button } from "@material-ui/core";
+import React from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import {
+  Button,
+} from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,45 +37,50 @@ const useStyles = makeStyles((theme) => ({
     color: "#f5c71a",
   },
   title: {
-      color: 'white',
-      fontSize: '4rem',
-      fontFamily: 'Ubuntu'
+    color: "white",
+    fontSize: "4rem",
+    fontFamily: "Ubuntu",
   },
   container: {
-      textAlign: 'center'
+    textAlign: "center",
   },
   containerButton: {
-      margin: theme.spacing(1),
-      color: 'white',
-      fontFamily: 'Ubuntu',
-      fontSize: '1.5rem',
-      fontWeight: 600,
-      background: '#f5c71a',
-      '&:hover': {
-          color: '#000000',
-          background: '#f5c71a'
-      }
-  }
-}));
+    margin: theme.spacing(1),
+    color: "white",
+    fontFamily: "Ubuntu",
+    fontSize: "1.5rem",
+    fontWeight: 600,
+    background: "#f5c71a",
+    "&:hover": {
+      color: "#000000",
+      background: "#f5c71a",
+    },
+  },
+}))
 
 const HomeHeader = () => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={classes.root}>
 
       <div className={classes.container}>
-          <h1 className={classes.title}>
-              The most innovative way to meet up <br />Halfway <span className={classes.colorText}>There</span>
-          </h1>
-          <Button href="/register" className={classes.containerButton}>
-              Register
-          </Button>
-          <Button href="/login" className={classes.containerButton}>
-              Login
-          </Button>
+        <h1 className={classes.title}>
+          The most innovative way to meet up
+          {" "}
+          <br />
+          Halfway
+          {" "}
+          <span className={classes.colorText}>There</span>
+        </h1>
+        <Button href="/register" className={classes.containerButton}>
+          Register
+        </Button>
+        <Button href="/login" className={classes.containerButton}>
+          Login
+        </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HomeHeader;
+export default HomeHeader
