@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { useHistory } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 // Material-UI Imports:
 import {
   AppBar,
@@ -9,20 +9,20 @@ import {
   TextField,
   Toolbar,
   Typography,
-} from "@material-ui/core"
-import Button from "@material-ui/core/Button"
-import { makeStyles } from "@material-ui/core/styles"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import InputLabel from "@material-ui/core/InputLabel"
-import Input from "@material-ui/core/Input"
-import MenuItem from "@material-ui/core/MenuItem"
-import FormControl from "@material-ui/core/FormControl"
-import Select from "@material-ui/core/Select"
-import Slider from "@material-ui/core/Slider"
-import { auth } from "../firebase"
+} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Slider from "@material-ui/core/Slider";
+import { auth } from "../firebase";
 // Material-UI Styling:
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,17 +69,24 @@ const useStyles = makeStyles((theme) => ({
       color: "#f5c71a",
     },
   },
-}))
-const Header = ({ data, clearUser }) => {
-  const classes = useStyles()
-  const [open, setOpen] = useState(false)
-  const [contact, setContact] = useState("")
-  const [customContact, setCustomContact] = useState("")
-  const [category, setCategory] = useState("")
-  const [customCategory, setCustomCategory] = useState("")
-  const [contactDropdown, setContactDropdown] = useState(true)
-  const [categoryDropdown, setCategoryDropdown] = useState(true)
-  const [defaultRadius, setDefaultRadius] = useState()
+}));
+const Header = ({ data, clearUser, setSearch }) => {
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [contact, setContact] = useState("");
+  const [customContact, setCustomContact] = useState("");
+  const [category, setCategory] = useState("");
+  const [customCategory, setCustomCategory] = useState("");
+  const [contactDropdown, setContactDropdown] = useState(true);
+  const [categoryDropdown, setCategoryDropdown] = useState(true);
+  const [defaultRadius, setDefaultRadius] = useState(data.user !== null ? data.user.defaultRadius : 3);
+
+  useEffect(() => {
+    if (data.user !== null) {
+      setDefaultRadius(+data.user.defaultRadius)
+    }
+  }, [data])
+
 
   // Marks for Slider labels
   const marks = [
@@ -123,75 +130,103 @@ const Header = ({ data, clearUser }) => {
       value: 10,
       label: "10",
     },
-  ]
+  ];
 
   // Function for showing Radius labels
-  const valueText = (value) => `${value}`
+  const valueText = (value) => `${value}`;
+
+  const handleSubmit = () => {
+    const search = {
+      home: data.user.address,
+      contact: contactDropdown ? contact : customContact,
+      radius: defaultRadius,
+      category: categoryDropdown ? category : customCategory,
+    }
+    setSearch(search)
+  }
+
+  const handleChange = (event, newValue) => {
+    setDefaultRadius(newValue);
+  };
 
   const handleClickOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-    setContact("")
-    setCustomContact("")
-    setCategory("")
-    setCustomCategory("")
-    setContactDropdown(true)
-    setCategoryDropdown(true)
-    setDefaultRadius(data.user.defaultRadius)
-  }
-  const history = useHistory()
+    setOpen(false);
+    setContact("");
+    setCustomContact("");
+    setCategory("");
+    setCustomCategory("");
+    setContactDropdown(true);
+    setCategoryDropdown(true);
+    setDefaultRadius(data.user.defaultRadius);
+  };
+  const history = useHistory();
   const onLogOut = () => {
-    localStorage.removeItem("token")
+    localStorage.removeItem("token");
     auth.signOut().then(() => {
-      clearUser()
-      history.push("/login")
-    })
-  }
+      clearUser();
+      history.push("/login");
+    });
+  };
   const handleContactTypeChange = (e) => {
-    const { value } = e.target
-    setContactDropdown(value === "dropdown")
-  }
+    const { value } = e.target;
+    setContactDropdown(value === "dropdown");
+  };
   const handleContactDropdown = (e) => {
-    const { value } = e.target
-    setContact(value)
-  }
+    const { value } = e.target;
+    setContact(value);
+  };
   const handleCategoryTypeChange = (e) => {
-    const { value } = e.target
-    setCategoryDropdown(value === "dropdown")
-  }
+    const { value } = e.target;
+    setCategoryDropdown(value === "dropdown");
+  };
   const handleCategoryDropdown = (e) => {
-    const { value } = e.target
-    setCategory(value)
-  }
+    const { value } = e.target;
+    setCategory(value);
+  };
   return (
     <>
       <div className={classes.root}>
         <AppBar position="static" className={classes.appBar} elevation={0}>
           <Toolbar className={classes.appBarWrapper}>
             <h1 className={classes.title}>
-              Halfway
-              {" "}
-              <span className={classes.colorText}>There</span>
+              Halfway <span className={classes.colorText}>There</span>
             </h1>
             {data.user === null ? (
-              <Button className={classes.appBarButton} href="/register" color="inherit">
+              <Button
+                className={classes.appBarButton}
+                href="/register"
+                color="inherit"
+              >
                 Register
               </Button>
             ) : null}
             {data.user === null ? (
-              <Button className={classes.appBarButton} href="/login" color="inherit">
+              <Button
+                className={classes.appBarButton}
+                href="/login"
+                color="inherit"
+              >
                 Login
               </Button>
             ) : null}
             {data.user !== null ? (
-              <Button className={classes.appBarButton} onClick={onLogOut} color="inherit">
+              <Button
+                className={classes.appBarButton}
+                onClick={onLogOut}
+                color="inherit"
+              >
                 Log out
               </Button>
             ) : null}
             {data.user !== null ? (
-              <Button className={classes.appBarButton} onClick={handleClickOpen} color="inherit">
+              <Button
+                className={classes.appBarButton}
+                onClick={handleClickOpen}
+                color="inherit"
+              >
                 Search
               </Button>
             ) : null}
@@ -217,7 +252,7 @@ const Header = ({ data, clearUser }) => {
                         <RadioGroup
                           row
                           aria-label="contactType"
-                          labelId="demo-dialog-type-label"
+                          labelid="demo-dialog-type-label"
                           name="contactType"
                           value={customContact}
                           onChange={handleContactTypeChange}
@@ -240,14 +275,17 @@ const Header = ({ data, clearUser }) => {
                                 Contact
                               </InputLabel>
                               <Select
-                                labelId="demo-dialog-select-label"
+                                labelid="demo-dialog-select-label"
                                 id="demo-dialog-select"
                                 value={contact}
                                 onChange={handleContactDropdown}
                                 input={<Input />}
                               >
                                 {data.contacts.map((person) => (
-                                  <MenuItem value={person.address} key={person.addressId}>
+                                  <MenuItem
+                                    value={person.address}
+                                    key={person.addressId}
+                                  >
                                     {person.contactName}
                                   </MenuItem>
                                 ))}
@@ -280,7 +318,7 @@ const Header = ({ data, clearUser }) => {
                           <RadioGroup
                             row
                             aria-label="contactType"
-                            labelId="demo-dialog-type-label"
+                            labelid="demo-dialog-type-label"
                             name="contactType"
                             value={customContact}
                             onChange={handleCategoryTypeChange}
@@ -303,7 +341,7 @@ const Header = ({ data, clearUser }) => {
                                   Category
                                 </InputLabel>
                                 <Select
-                                  labelId="demo-dialog-select-label-2"
+                                  labelid="demo-dialog-select-label-2"
                                   id="demo-dialog-select-cat"
                                   value={category}
                                   onChange={handleCategoryDropdown}
@@ -321,7 +359,9 @@ const Header = ({ data, clearUser }) => {
                                 id="standard-basic"
                                 label="Category"
                                 value={customCategory}
-                                onChange={(e) => setCustomCategory(e.target.value)}
+                                onChange={(e) =>
+                                  setCustomCategory(e.target.value)
+                                }
                               />
                             )}
                           </FormControl>
@@ -335,15 +375,14 @@ const Header = ({ data, clearUser }) => {
                     Radius
                   </Typography>
                   <Slider
-                    defaultValue={data.user !== null ? data.user.defaultRadius : 3}
                     aria-labelledby="discrete-slider-small-steps"
                     step={1}
                     getAriaValueText={valueText}
                     marks={marks}
                     min={1}
                     max={10}
-                    value={defaultRadius}
-                    onChange={(e) => setDefaultRadius(e.target.value)}
+                    value={data.user !== null ? data.user.defaultRadius : 3}
+                    onChange={handleChange}
                     valueLabelDisplay="auto"
                   />
                 </div>
@@ -352,7 +391,7 @@ const Header = ({ data, clearUser }) => {
                 <Button onClick={handleClose} color="secondary">
                   Cancel
                 </Button>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleSubmit} color="primary">
                   Submit
                 </Button>
               </DialogActions>
@@ -361,6 +400,6 @@ const Header = ({ data, clearUser }) => {
         </AppBar>
       </div>
     </>
-  )
-}
-export default Header
+  );
+};
+export default Header;

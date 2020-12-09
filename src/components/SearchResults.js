@@ -19,6 +19,7 @@ import {
 import React, { useState, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import axiosWithAuth from "../Auth/axiosWithAuth"
+import Search from "./Search"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -164,15 +165,13 @@ const SearchResults = ({
   return (
     <>
       {searchInfo !== null ? (
-        {
-          /* Load Map */
-        }
+          <Search />
       ) : (
         <Dialog
-          disableBackdropClick
-          disableEscapeKeyDown
-          open
-        >
+              disableBackdropClick
+              disableEscapeKeyDown
+              open='true'
+            >
           <DialogTitle>New Search</DialogTitle>
           <DialogContent>
             <form className={classes.container}>
@@ -189,7 +188,7 @@ const SearchResults = ({
                     <RadioGroup
                       row
                       aria-label="contactType"
-                      labelId="demo-dialog-type-label"
+                      labelid="demo-dialog-type-label"
                       name="contactType"
                       value={customContact}
                       onChange={handleContactTypeChange}
@@ -212,7 +211,7 @@ const SearchResults = ({
                             Contact
                           </InputLabel>
                           <Select
-                            labelId="demo-dialog-select-label"
+                            labelid="demo-dialog-select-label"
                             id="demo-dialog-select"
                             value={contact}
                             onChange={handleContactDropdown}
@@ -255,7 +254,7 @@ const SearchResults = ({
                       <RadioGroup
                         row
                         aria-label="contactType"
-                        labelId="demo-dialog-type-label"
+                        labelid="demo-dialog-type-label"
                         name="contactType"
                         value={customContact}
                         onChange={handleCategoryTypeChange}
@@ -278,7 +277,7 @@ const SearchResults = ({
                               Category
                             </InputLabel>
                             <Select
-                              labelId="demo-dialog-select-label-2"
+                              labelid="demo-dialog-select-label-2"
                               id="demo-dialog-select-cat"
                               value={category}
                               onChange={handleCategoryDropdown}
@@ -331,7 +330,7 @@ const SearchResults = ({
               Submit
             </Button>
           </DialogActions>
-        </Dialog>
+          </Dialog>
       )}
     </>
   )

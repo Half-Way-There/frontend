@@ -8,7 +8,7 @@ import PrivateRoute from "../Auth/PrivateRoute"
 import DashboardContainer from "../containers/DashboardContainer"
 import Home from "./Home"
 import HeaderContainer from "../containers/HeaderContainer"
-import SearchResults from "./SearchResults"
+import SearchResultsContainer from "../containers/SearchResultsContainer"
 
 const App = () => (
   <div>
@@ -20,7 +20,7 @@ const App = () => (
       <Route exact path="/login" component={LoginContainer} />
       <Route exact path="/guest-view" component={GuestView} />
       <PrivateRoute exact path="/dashboard" component={DashboardContainer} />
-      <PrivateRoute exact path="/custom-search" component={SearchResults} />
+      <PrivateRoute exact path="/search-results" component={SearchResultsContainer} />
     </Switch>
   </div>
 )
