@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { useHistory } from "react-router-dom"
 // Material-UI Imports:
 import {
   AppBar,
@@ -9,20 +9,20 @@ import {
   TextField,
   Toolbar,
   Typography,
-} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Slider from "@material-ui/core/Slider";
-import { auth } from "../firebase";
+} from "@material-ui/core"
+import Button from "@material-ui/core/Button"
+import { makeStyles } from "@material-ui/core/styles"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import InputLabel from "@material-ui/core/InputLabel"
+import Input from "@material-ui/core/Input"
+import MenuItem from "@material-ui/core/MenuItem"
+import FormControl from "@material-ui/core/FormControl"
+import Select from "@material-ui/core/Select"
+import Slider from "@material-ui/core/Slider"
+import { auth } from "../firebase"
 // Material-UI Styling:
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,24 +69,24 @@ const useStyles = makeStyles((theme) => ({
       color: "#f5c71a",
     },
   },
-}));
+}))
 const Header = ({ data, clearUser, setSearch }) => {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [contact, setContact] = useState("");
-  const [customContact, setCustomContact] = useState("");
-  const [category, setCategory] = useState("");
-  const [customCategory, setCustomCategory] = useState("");
-  const [contactDropdown, setContactDropdown] = useState(true);
-  const [categoryDropdown, setCategoryDropdown] = useState(true);
-  const [defaultRadius, setDefaultRadius] = useState(data.user !== null ? data.user.defaultRadius : 3);
+  const classes = useStyles()
+  const [open, setOpen] = useState(false)
+  const [contact, setContact] = useState("")
+  const [customContact, setCustomContact] = useState("")
+  const [category, setCategory] = useState("")
+  const [customCategory, setCustomCategory] = useState("")
+  const [contactDropdown, setContactDropdown] = useState(true)
+  const [categoryDropdown, setCategoryDropdown] = useState(true)
+  // eslint-disable-next-line max-len
+  const [defaultRadius, setDefaultRadius] = useState(data.user !== null ? data.user.defaultRadius : 3)
 
   useEffect(() => {
     if (data.user !== null) {
       setDefaultRadius(+data.user.defaultRadius)
     }
   }, [data])
-
 
   // Marks for Slider labels
   const marks = [
@@ -130,10 +130,10 @@ const Header = ({ data, clearUser, setSearch }) => {
       value: 10,
       label: "10",
     },
-  ];
+  ]
 
   // Function for showing Radius labels
-  const valueText = (value) => `${value}`;
+  const valueText = (value) => `${value}`
 
   const handleSubmit = () => {
     const search = {
@@ -146,53 +146,59 @@ const Header = ({ data, clearUser, setSearch }) => {
   }
 
   const handleChange = (event, newValue) => {
-    setDefaultRadius(newValue);
-  };
+    setDefaultRadius(newValue)
+  }
+
+  const hangleCommittedChange = (event, newValue) => {
+    setDefaultRadius(newValue)
+  }
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const handleClose = () => {
-    setOpen(false);
-    setContact("");
-    setCustomContact("");
-    setCategory("");
-    setCustomCategory("");
-    setContactDropdown(true);
-    setCategoryDropdown(true);
-    setDefaultRadius(data.user.defaultRadius);
-  };
-  const history = useHistory();
+    setOpen(false)
+    setContact("")
+    setCustomContact("")
+    setCategory("")
+    setCustomCategory("")
+    setContactDropdown(true)
+    setCategoryDropdown(true)
+    setDefaultRadius(data.user.defaultRadius)
+  }
+  const history = useHistory()
   const onLogOut = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("token")
     auth.signOut().then(() => {
-      clearUser();
-      history.push("/login");
-    });
-  };
+      clearUser()
+      history.push("/login")
+    })
+  }
   const handleContactTypeChange = (e) => {
-    const { value } = e.target;
-    setContactDropdown(value === "dropdown");
-  };
+    const { value } = e.target
+    setContactDropdown(value === "dropdown")
+  }
   const handleContactDropdown = (e) => {
-    const { value } = e.target;
-    setContact(value);
-  };
+    const { value } = e.target
+    setContact(value)
+  }
   const handleCategoryTypeChange = (e) => {
-    const { value } = e.target;
-    setCategoryDropdown(value === "dropdown");
-  };
+    const { value } = e.target
+    setCategoryDropdown(value === "dropdown")
+  }
   const handleCategoryDropdown = (e) => {
-    const { value } = e.target;
-    setCategory(value);
-  };
+    const { value } = e.target
+    setCategory(value)
+  }
   return (
     <>
       <div className={classes.root}>
         <AppBar position="static" className={classes.appBar} elevation={0}>
           <Toolbar className={classes.appBarWrapper}>
             <h1 className={classes.title}>
-              Halfway <span className={classes.colorText}>There</span>
+              Halfway
+              {" "}
+              <span className={classes.colorText}>There</span>
             </h1>
             {data.user === null ? (
               <Button
@@ -359,9 +365,7 @@ const Header = ({ data, clearUser, setSearch }) => {
                                 id="standard-basic"
                                 label="Category"
                                 value={customCategory}
-                                onChange={(e) =>
-                                  setCustomCategory(e.target.value)
-                                }
+                                onChange={(e) => setCustomCategory(e.target.value)}
                               />
                             )}
                           </FormControl>
@@ -381,8 +385,9 @@ const Header = ({ data, clearUser, setSearch }) => {
                     marks={marks}
                     min={1}
                     max={10}
-                    value={data.user !== null ? data.user.defaultRadius : 3}
+                    value={defaultRadius}
                     onChange={handleChange}
+                    onChangeCommitted={hangleCommittedChange}
                     valueLabelDisplay="auto"
                   />
                 </div>
@@ -400,6 +405,6 @@ const Header = ({ data, clearUser, setSearch }) => {
         </AppBar>
       </div>
     </>
-  );
-};
-export default Header;
+  )
+}
+export default Header

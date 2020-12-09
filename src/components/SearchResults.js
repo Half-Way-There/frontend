@@ -72,16 +72,22 @@ const SearchResults = ({
 }) => {
   // Declaring Material-UI Styles
   const classes = useStyles()
-
   const [contact, setContact] = useState("")
   const [customContact, setCustomContact] = useState("")
   const [category, setCategory] = useState("")
   const [customCategory, setCustomCategory] = useState("")
   const [contactDropdown, setContactDropdown] = useState(true)
   const [categoryDropdown, setCategoryDropdown] = useState(true)
-  const [defaultRadius, setDefaultRadius] = useState()
+  // eslint-disable-next-line max-len
+  const [defaultRadius, setDefaultRadius] = useState(data.user !== null ? data.user.defaultRadius : 3)
 
-  // handle Changes
+  const handleChange = (event, newValue) => {
+    setDefaultRadius(newValue)
+  }
+
+  const hangleCommittedChange = (event, newValue) => {
+    setDefaultRadius(newValue)
+  }
 
   const handleContactTypeChange = (e) => {
     const { value } = e.target
@@ -101,7 +107,13 @@ const SearchResults = ({
   }
 
   const handleSubmit = () => {
-
+    const search = {
+      home: data.user.address,
+      contact: contactDropdown ? contact : customContact,
+      radius: defaultRadius,
+      category: categoryDropdown ? category : customCategory,
+    }
+    setSearch(search)
   }
 
   useEffect(() => {
@@ -114,6 +126,12 @@ const SearchResults = ({
         console.log(err.message)
       })
   }, [setData])
+
+  useEffect(() => {
+    if (data.user !== null) {
+      setDefaultRadius(+data.user.defaultRadius)
+    }
+  }, [data])
 
   // Marks for Slider labels
   const marks = [
@@ -165,13 +183,13 @@ const SearchResults = ({
   return (
     <>
       {searchInfo !== null ? (
-          <Search />
+        <Search />
       ) : (
         <Dialog
-              disableBackdropClick
-              disableEscapeKeyDown
-              open='true'
-            >
+          disableBackdropClick
+          disableEscapeKeyDown
+          open="true"
+        >
           <DialogTitle>New Search</DialogTitle>
           <DialogContent>
             <form className={classes.container}>
@@ -312,7 +330,6 @@ const SearchResults = ({
                 Radius
               </Typography>
               <Slider
-                defaultValue={data.user !== null ? data.user.defaultRadius : 3}
                 aria-labelledby="discrete-slider-small-steps"
                 step={1}
                 getAriaValueText={valueText}
@@ -320,7 +337,8 @@ const SearchResults = ({
                 min={1}
                 max={10}
                 value={defaultRadius}
-                onChange={(e) => setDefaultRadius(e.target.value)}
+                onChange={handleChange}
+                onChangeCommitted={hangleCommittedChange}
                 valueLabelDisplay="auto"
               />
             </div>
@@ -330,7 +348,7 @@ const SearchResults = ({
               Submit
             </Button>
           </DialogActions>
-          </Dialog>
+        </Dialog>
       )}
     </>
   )
