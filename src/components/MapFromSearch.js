@@ -4,11 +4,11 @@ import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 
 const StyledApp = styled.div`
-  height: 100vh; 
+  height: 90vh; 
   width: 100%;
 `
-function Map({
-  options, onMount, className, onMountProps
+function MapFromSearch({
+  options, onMount, className, onMountProps, contact, radius, category
 }) {
   const ref = useRef()
   const [map, setMap] = useState()
@@ -96,18 +96,18 @@ function Map({
     }
   }, [window.google])
 
-  if (map && typeof onMount === "function") onMount(map, onMountProps)
+  if (map && typeof onMount === "function") onMount(map, contact, radius, category)
 
   return (
     <StyledApp {...{ ref, className }} />
   )
 }
 
-Map.defaultProps = {
+MapFromSearch.defaultProps = {
   options: {
     center: { lat: 48, lng: 8 },
     zoom: 5,
   },
 }
 
-export default Map
+export default MapFromSearch

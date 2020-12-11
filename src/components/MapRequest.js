@@ -7,7 +7,7 @@ const StyledMapRequest = styled.section`
   justify-content: space-evenly;
   text-align: center;
   padding: 0% 3%;
-  height: 100vh;
+  height: 90vh;
   .first-address h2 {
     color: #c7c7c7;
     text-align: center;

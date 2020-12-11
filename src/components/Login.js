@@ -165,7 +165,7 @@ const Login = ({ setData }) => {
                 </Grid>
                 <Grid item>
                   <Link href="/register" variant="body2">
-                    Don't have an account? Register
+                    Don&#39;t have an account? Register
                   </Link>
                 </Grid>
               </Grid>
