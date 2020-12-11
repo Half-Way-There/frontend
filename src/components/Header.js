@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "1px 1px 3px black",
     position: "relative",
     zIndex: 1,
+    height: "10vh",
   },
   appBarButton: {
     color: "white",
@@ -79,6 +80,7 @@ const Header = ({ data, clearUser, setSearch }) => {
   const [customCategory, setCustomCategory] = useState("")
   const [contactDropdown, setContactDropdown] = useState(true)
   const [categoryDropdown, setCategoryDropdown] = useState(true)
+  const history = useHistory()
   // eslint-disable-next-line max-len
   const [defaultRadius, setDefaultRadius] = useState(data.user !== null ? data.user.defaultRadius : 3)
 
@@ -135,6 +137,17 @@ const Header = ({ data, clearUser, setSearch }) => {
   // Function for showing Radius labels
   const valueText = (value) => `${value}`
 
+  const handleClose = () => {
+    setOpen(false)
+    setContact("")
+    setCustomContact("")
+    setCategory("")
+    setCustomCategory("")
+    setContactDropdown(true)
+    setCategoryDropdown(true)
+    setDefaultRadius(data.user.defaultRadius)
+  }
+
   const handleSubmit = () => {
     const search = {
       home: data.user.address,
@@ -143,6 +156,8 @@ const Header = ({ data, clearUser, setSearch }) => {
       category: categoryDropdown ? category : customCategory,
     }
     setSearch(search)
+    handleClose()
+    history.push("/search-results")
   }
 
   const handleChange = (event, newValue) => {
@@ -154,19 +169,9 @@ const Header = ({ data, clearUser, setSearch }) => {
   }
 
   const handleClickOpen = () => {
-    setOpen(true)
+    history.push("/search-results")
   }
-  const handleClose = () => {
-    setOpen(false)
-    setContact("")
-    setCustomContact("")
-    setCategory("")
-    setCustomCategory("")
-    setContactDropdown(true)
-    setCategoryDropdown(true)
-    setDefaultRadius(data.user.defaultRadius)
-  }
-  const history = useHistory()
+
   const onLogOut = () => {
     localStorage.removeItem("token")
     auth.signOut().then(() => {

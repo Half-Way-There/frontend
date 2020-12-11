@@ -2,7 +2,8 @@ import React from "react"
 import styled from "styled-components"
 
 const StyledPlaces = styled.div`
-  height: 100vh;
+  height: 90vh;
+  background-color: black;
   width: 0%;
   overflow-y: scroll;
   ::-webkit-scrollbar {
