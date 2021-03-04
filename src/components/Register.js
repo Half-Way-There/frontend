@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     minHeight: "100vh",
-    background: "#121212",
+    // background: "#121212",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },

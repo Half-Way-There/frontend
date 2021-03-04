@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%",
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     minHeight: "100vh",
-    background: "#121212",
+    // background: "#121212",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
@@ -85,6 +85,7 @@ const Login = ({ setData }) => {
     setLoading(true)
     auth.signInWithEmailAndPassword(form.email, form.password)
       .then(({ user }) => user.getIdToken().then((idToken) => {
+        console.log(user)
         localStorage.setItem("token", idToken)
         axios
           .post("http://localhost:5001/auth/login", { idToken }, {

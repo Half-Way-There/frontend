@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 import Dashboard from "../components/Dashboard"
-import { setData } from "../Store/actions"
+import { setData } from "../state/actions"
 
 const mapStateToProps = (state) => ({
   user: state.data.user,

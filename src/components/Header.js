@@ -226,10 +226,10 @@ const Header = ({ data, clearUser, setSearch }) => {
             {data.user !== null ? (
               <Button
                 className={classes.appBarButton}
-                onClick={onLogOut}
+                href="/dashboard"
                 color="inherit"
               >
-                Log out
+                Dashboard
               </Button>
             ) : null}
             {data.user !== null ? (
@@ -241,6 +241,16 @@ const Header = ({ data, clearUser, setSearch }) => {
                 Search
               </Button>
             ) : null}
+            {data.user !== null ? (
+              <Button
+                className={classes.appBarButton}
+                onClick={onLogOut}
+                color="inherit"
+              >
+                Log out
+              </Button>
+            ) : null}
+            
             <Dialog
               disableBackdropClick
               disableEscapeKeyDown
