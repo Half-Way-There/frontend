@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 import Header from "../components/Header"
-import { clearUser, setSearch } from "../Store/actions"
+import { clearUser, setSearch } from "../state/actions"
 
 const mapStateToProps = (state) => ({
   data: state.data,

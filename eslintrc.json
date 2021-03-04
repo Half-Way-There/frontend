@@ -27,6 +27,5 @@
       "react/jsx-props-no-spreading": ["error", {"custom": "ignore"}],
       "react/prop-types": 0,
       "no-unused-vars": 0
-      
     }
 }
