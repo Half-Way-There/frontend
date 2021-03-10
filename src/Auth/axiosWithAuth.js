@@ -6,7 +6,7 @@ const axiosWithAuth = () => {
     headers: {
       authorization: token,
     },
-    baseURL: "http://localhost:5001/",
+    baseURL: `${process.env.REACT_APP_BACKEND}`,
   })
 }
 
