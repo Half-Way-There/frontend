@@ -101,6 +101,9 @@ const Register = () => {
               localStorage.removeItem("token")
               history.push("/login")
             })
+            .catch(() => {
+                setError("This email is already associated with an account")
+            })
         }))
     } else {
       setError("Passwords must match!")
