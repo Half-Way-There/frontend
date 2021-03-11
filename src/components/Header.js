@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }))
+
 const Header = ({ data, clearUser, setSearch }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -169,7 +170,7 @@ const Header = ({ data, clearUser, setSearch }) => {
   }
 
   const handleClickOpen = () => {
-    history.push("/search-results")
+    setOpen(true)
   }
 
   const onLogOut = () => {
@@ -238,7 +239,7 @@ const Header = ({ data, clearUser, setSearch }) => {
                 onClick={handleClickOpen}
                 color="inherit"
               >
-                Search
+                New Search
               </Button>
             ) : null}
             {data.user !== null ? (
