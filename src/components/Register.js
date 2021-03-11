@@ -16,6 +16,7 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import { auth } from "../firebase"
+import toast from 'react-hot-toast'
 
 // Material-UI Copyright Information:
 function Copyright() {
@@ -69,8 +70,6 @@ const Register = () => {
     confirmPassword: "",
     address: "",
   })
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
   const history = useHistory()
 
   const onChange = (e) => {
@@ -84,14 +83,12 @@ const Register = () => {
   // Creating a firebase user
   const onSubmit = async (e) => {
     e.preventDefault()
-    setError("")
-    setLoading(true)
     if (form.password === form.confirmPassword) {
       auth.createUserWithEmailAndPassword(form.email, form.password)
         .then(({ user }) => user.getIdToken().then((idToken) => {
           localStorage.setItem("token", idToken)
           axios
-            .post("http://localhost:5001/auth/register", { address: form.address }, {
+            .post(`${process.env.REACT_APP_BACKEND}auth/register`, { address: form.address }, {
               headers: {
                 authorization: idToken,
               },
@@ -99,14 +96,18 @@ const Register = () => {
             .then(() => {
               auth.signOut()
               localStorage.removeItem("token")
+              toast.success('Thanks for Registering! Now Log In');
               history.push("/login")
             })
             .catch(() => {
-                setError("This email is already associated with an account")
+                toast.error('There was a problem setting up your account. Please try again later. Contact us if this issue continues.')
             })
         }))
+        .catch(() => {
+            toast.error('There was a problem registering. Do you already have an account?')
+        })
     } else {
-      setError("Passwords must match!")
+        toast.error('The passwords you entered do not match.')
     }
   }
 

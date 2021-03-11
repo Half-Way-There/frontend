@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import axios from "axios"
+import toast from 'react-hot-toast'
 
 // Material-UI Imports for styling:
 import Avatar from "@material-ui/core/Avatar"
@@ -67,8 +68,6 @@ const Login = ({ setData }) => {
     email: "",
     password: "",
   })
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
   const history = useHistory()
 
   const onChange = (e) => {
@@ -82,27 +81,27 @@ const Login = ({ setData }) => {
   // Create a token then verify on the server side
   const onSubmit = (e) => {
     e.preventDefault()
-    setLoading(true)
     auth.signInWithEmailAndPassword(form.email, form.password)
       .then(({ user }) => user.getIdToken().then((idToken) => {
         console.log(user)
         localStorage.setItem("token", idToken)
         axios
-          .post("http://localhost:5001/auth/login", { idToken }, {
+          .post(`${process.env.REACT_APP_BACKEND}auth/login`, { idToken }, {
             headers: {
               authorization: idToken,
             },
           })
           .then((res) => {
+            toast.success('Welcome Back to Half Way There!')
             setData(res.data)
             history.push("/dashboard")
           })
           .catch((err) => {
-            setError(err.message)
+            toast.error('Incorrect username or password');
           })
       }))
       .catch((err) => {
-        console.log(err)
+        toast.error('This account with this email doesn\'t exist please login first');
       })
   }
 
@@ -112,7 +111,6 @@ const Login = ({ setData }) => {
         <Container component="main" maxWidth="xs">
 
           <CssBaseline />
-          {error ? <p>{error}</p> : null}
           <div className={classes.paper}>
             <Avatar className={classes.avatar} />
             <Typography component="h1" variant="h5">
