@@ -1,12 +1,11 @@
 import React, { useState } from "react"
 import { auth } from "../firebase"
+import toast from 'react-hot-toast'
 
 const ForgotPassword = () => {
   const [form, setForm] = useState({
     email: "",
   })
-  const [message, setMessage] = useState("")
-  const [error, setError] = useState("")
 
   const onChange = (e) => {
     const { name, value } = e.target
@@ -19,23 +18,20 @@ const ForgotPassword = () => {
   // Sends recovery email
   const onSubmit = async (e) => {
     e.preventDefault()
-    setError("")
     auth.sendPasswordResetEmail(form.email)
       .then(() => {
         setForm({
           form: "",
         })
-        setMessage("Check your email for reset link!")
+        toast.success('Check your email for reset link!')
       })
       .catch(() => {
-        setError("No account with this email found!")
+        toast.error('No account with this email was found.')
       })
   }
 
   return (
     <div>
-      {error ? <p>{error}</p> : null}
-      {message ? <p>{message}</p> : null}
       <form onSubmit={onSubmit}>
         <div>
           <input
@@ -46,7 +42,7 @@ const ForgotPassword = () => {
             placeholder="Email"
           />
         </div>
-        <button type="button">
+        <button type="submit">
           Submit
         </button>
       </form>

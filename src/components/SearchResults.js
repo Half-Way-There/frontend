@@ -85,7 +85,6 @@ const SearchResults = ({ data, searchInfo, setData, setSearch }) => {
   const [categoryDropdown, setCategoryDropdown] = useState(true)
   const [open, setOpen] = useState(true)
   const [completedInfo, setCompletedInfo] = useState()
-  // eslint-disable-next-line max-len
   const [defaultRadius, setDefaultRadius] = useState(data.user !== null ? data.user.defaultRadius : 3)
 
   const handleChange = (event, newValue) => {
@@ -547,6 +546,9 @@ const SearchResults = ({ data, searchInfo, setData, setSearch }) => {
             </div>
           </DialogContent>
           <DialogActions>
+            <Button onClick={() => setOpen(false)} color="primary">
+              Cancel
+            </Button>
             <Button onClick={handleSubmit} color="primary">
               Submit
             </Button>
