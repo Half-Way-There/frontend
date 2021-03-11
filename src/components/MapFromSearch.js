@@ -15,7 +15,10 @@ function MapFromSearch({
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    const onLoad = () => setMap(new window.google.maps.Map(ref.current, options))
+    
+    const onLoad = () => {
+      setMap(new window.google.maps.Map(ref.current, options))
+    }
     if (!window.google) {
       const script = document.createElement("script")
       script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=geometry&libraries=places`
